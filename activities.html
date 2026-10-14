@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>งานจิตอาสาทั้งหมด | Ground Team แพลตฟอร์มอาสาสมัครเพื่อสังคม</title>
+  <meta name="description"
+    content="ค้นหาโครงการจิตอาสาและกิจกรรมเพื่อสังคมทั่วประเทศ ปลูกป่า พิทักษ์ทะเล การศึกษา ชุมชน และสัตว์จรจัด สมัครร่วมกิจกรรมได้ทันที">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+
+  <!-- Bootstrap 5 CSS ผ่าน CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- Font Awesome 6 Icons ผ่าน CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- สไตล์หลักของโครงการ (Custom CSS) -->
+  <link rel="stylesheet" href="assets/css/style.css?v=2.2">
+
+  <style>
+    /* Ground Team Custom Themed Pagination (Direct Override) */
+    .ground-pagination,
+    #activityPagination {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      list-style: none !important;
+      padding: 8px 16px !important;
+      margin: 0 auto !important;
+      border-radius: 50px !important;
+      background-color: var(--bg-surface, #ffffff) !important;
+      border: 1.5px solid var(--border-color, #e2e8f0) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    #activityPagination .page-item,
+    .ground-pagination .page-item {
+      margin: 0 !important;
+      list-style: none !important;
+    }
+
+    #activityPagination .page-item:not(:first-child) .page-link,
+    .ground-pagination .page-item:not(:first-child) .page-link {
+      margin-left: 0 !important;
+    }
+
+    #activityPagination .page-link,
+    .ground-pagination .page-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-family: 'Prompt', sans-serif !important;
+      font-size: 0.95rem !important;
+      font-weight: 600 !important;
+      min-width: 44px !important;
+      height: 44px !important;
+      padding: 0 16px !important;
+      border-radius: 50px !important;
+      background: var(--bg-surface, #ffffff) !important;
+      color: var(--text-main, #0f172a) !important;
+      border: 1.5px solid var(--border-color, #e2e8f0) !important;
+      text-decoration: none !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      cursor: pointer !important;
+      user-select: none !important;
+    }
+
+    #activityPagination .page-link.page-link-num,
+    .ground-pagination .page-link.page-link-num {
+      min-width: 44px !important;
+      width: 44px !important;
+      padding: 0 !important;
+      border-radius: 50% !important;
+    }
+
+    #activityPagination .page-link:hover,
+    .ground-pagination .page-link:hover {
+      color: #10b981 !important;
+      background-color: rgba(16, 185, 129, 0.1) !important;
+      border-color: #10b981 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2) !important;
+    }
+
+    #activityPagination .page-item.active .page-link,
+    .ground-pagination .page-item.active .page-link {
+      background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      font-weight: 700 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4) !important;
+    }
+
+    #activityPagination .page-item.disabled .page-link,
+    .ground-pagination .page-item.disabled .page-link {
+      opacity: 0.45 !important;
+      color: var(--text-muted, #64748b) !important;
+      background: transparent !important;
+      border-color: var(--border-color, #e2e8f0) !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    [data-theme="dark"] #activityPagination,
+    [data-theme="dark"] .ground-pagination {
+      background-color: var(--bg-surface, #1e293b) !important;
+      border-color: var(--border-color, rgba(255, 255, 255, 0.1)) !important;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    [data-theme="dark"] #activityPagination .page-link,
+    [data-theme="dark"] .ground-pagination .page-link {
+      background-color: #1e293b !important;
+      border-color: rgba(255, 255, 255, 0.1) !important;
+      color: #e2e8f0 !important;
+    }
+
+    [data-theme="dark"] #activityPagination .page-link:hover,
+    [data-theme="dark"] .ground-pagination .page-link:hover {
+      background-color: rgba(16, 185, 129, 0.2) !important;
+      border-color: #34d399 !important;
+      color: #34d399 !important;
+    }
+
+    [data-theme="dark"] #activityPagination .page-item.active .page-link,
+    [data-theme="dark"] .ground-pagination .page-item.active .page-link {
+      background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+    }
+
+    [data-theme="dark"] #activityPagination .page-item.disabled .page-link,
+    [data-theme="dark"] .ground-pagination .page-item.disabled .page-link {
+      opacity: 0.45 !important;
+      color: #94a3b8 !important;
+      background: transparent !important;
+      border-color: rgba(52, 211, 153, 0.15) !important;
+    }
+  </style>
+</head>
+
+<body data-page="activities">
+
+  <!-- Preloader Loading Animation -->
+  <div id="preloader">
+    <div class="preloader-spinner"></div>
+    <div class="preloader-text">
+      <i class="fa-solid fa-leaf text-success me-1"></i> กำลังโหลดกิจกรรมจิตอาสา...
+    </div>
+  </div>
+
+  <!-- Navigation Bar (โหลดผ่าน components.js) -->
+  <div id="navbar-placeholder"></div>
+
+  <main>
+    <!-- Page Header Banner -->
+    <section class="py-5 text-center position-relative overflow-hidden" style="background: var(--grad-soft-bg);">
+      <div class="container py-4 position-relative z-2">
+        <h1 class="section-title reveal reveal-delay-1">
+          งานจิตอาสาทั้งหมด <span class="gradient-text-nature">เพื่อสังคมและธรรมชาติ</span>
+        </h1>
+        <p class="section-subtitle reveal reveal-delay-2">
+          เลือกโครงการที่ตรงกับความชอบของคุณ ไม่ว่าจะเป็นงานอนุรักษ์สิ่งแวดล้อม สอนหนังสือน้องๆ หรือช่วยเหลือชุมชน
+        </p>
+
+        <!-- Search Bar (ปรับปรุงให้ค้นหาได้จริง) -->
+        <div class="row justify-content-center mt-4 reveal reveal-delay-3">
+          <div class="col-md-8 col-lg-6">
+            <div class="input-group p-1 bg-surface rounded-pill shadow-sm border"
+              style="background-color: var(--bg-surface);">
+              <span class="input-group-text bg-transparent border-0 text-muted ps-3">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+              <input type="text" id="activitySearchInput" class="form-control border-0 bg-transparent shadow-none"
+                placeholder="ค้นหาตามชื่อโครงการ, จังหวัด หรือประเภทงาน...">
+              <button class="btn-primary-gradient px-4" id="activitySearchBtn" type="button">
+                ค้นหา
+              </button>
+            </div>
+            <div id="searchActiveIndicator" class="mt-2 text-center text-muted small" style="display: none;">
+              กำลังค้นหา: <strong id="searchKeywordText" class="text-success"></strong>
+              <button class="btn btn-link btn-sm text-danger text-decoration-none py-0 ms-2" id="clearSearchBtn">
+                <i class="fa-solid fa-xmark"></i> ล้างการค้นหา
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Filter Tabs & Activity Cards Grid -->
+    <section class="py-5" id="activities-section">
+      <div class="container">
+        <!-- Filter Tabs -->
+        <div class="filter-btn-group reveal">
+          <button class="btn-filter active" data-filter="all">
+            <i class="fa-solid fa-border-all me-1"></i> ทั้งหมด
+          </button>
+          <button class="btn-filter" data-filter="recruiting">
+            <i class="fa-solid fa-users me-1 text-success"></i> ยังรับสมัครอยู่
+          </button>
+          <button class="btn-filter" data-filter="donate">
+            <i class="fa-solid fa-donate me-1 text-info"></i> บริจาค
+          </button>
+          <button class="btn-filter" data-filter="edu">
+            <i class="fa-solid fa-graduation-cap me-1 text-warning"></i> การศึกษา & การเรียนรู้
+          </button>
+          <button class="btn-filter" data-filter="artificial">
+            <i class="fa-solid fa-hands-holding-child me-1 text-primary"></i> ประดิษฐ์
+          </button>
+          <button class="btn-filter" data-filter="nature">
+            <i class="fa-solid fa-tree me-1 text-success"></i> ธรรมชาติ
+          </button>
+          <button class="btn-filter" data-filter="food">
+            <i class="fa-solid fa-utensils me-1 text-danger"></i> อาหาร
+          </button>
+        </div>
+
+        <!-- Result Status Counter -->
+        <div class="d-flex justify-content-between align-items-center mb-3 text-muted small">
+          <div>พบโครงการจิตอาสา: <strong id="totalMatchingCount" class="text-success">18</strong> โครงการ</div>
+          <div id="pageIndicatorText">หน้า 1 จาก 3</div>
+        </div>
+
+        <!-- Activities Grid -->
+        <div class="row g-4" id="activityGrid">
+          <!-- Card 1 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/กระดาษทำมือ.jpeg" class="activity-card-img" alt="จิตอาสาทำสมุดทำมือ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 25 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาทำสมุดทำมือจากกระดาษรีไซเคิลให้น้อง ๆ ด้อยโอกาส</h3>
+                <p class="activity-desc">
+                  ร่วมทำสมุดจากกระดาษเหลือใช้ ที่นำกลับมารีไซเคิลให้เป็นสมุดที่พร้อมใช้งานอีกครั้ง
+                  เพื่อนำไปบริจาคต่อให้กับน้อง ๆ ที่ขาดแคลนทุนทรัพย์ หรือน้อง ๆ ที่อยู่ตามถิ่นทุรกันดารทั่วประเทศ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 25 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 13.00-17.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.มหาสารคาม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 30%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 50 คน</span>
+                    <strong class="text-success">สมัครแล้ว 15 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="1">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,food">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/แจกอาหารกลางวันเด็ก.jpg" class="activity-card-img" alt="โครงการมื้ออาหารกลางวัน เพื่อเด็ก" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-food"><i class="fa-solid fa-utensils"></i> อาหาร</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 28 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการมื้ออาหารกลางวัน เพื่อเด็ก</h3>
+                <p class="activity-desc">
+                  จิตอาสาไปร่วมกันช่วยทำมื้ออาหารกลางวันให้แก่เด็ก ๆ เพื่อช่วยในเรื่องของโภชนาการของน้อง ๆ
+                  ในวัยเรียนและยังเป็นการช่วยลดค่าใช้จ่ายในครัวเรือนให้แก่ครอบครัวของเด็ก ๆ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 28 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 10.00-15.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.นครพนม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 5 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 25%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 5 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="2">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,donate">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/จัดชุดสุขอนามัยแบ่งปันให้ผู้ไร้ยาก.PNG" class="activity-card-img" alt="จิตอาสาจัดชุดสุขอนามัย" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-donate"><i class="fa-solid fa-donate"></i> บริจาค</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 20 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาจัดชุดสุขอนามัยแบ่งปันให้ผู้ยากไร้</h3>
+                <p class="activity-desc">
+                  รวบรวมสบู่ แปรงสีฟัน ยาสีฟัน และของใช้จำเป็นที่ยังไม่เปิดใช้
+                  นำมาจัดเป็นชุดเพื่อบริจาคให้ผู้ที่ขาดแคลนและครอบครัวที่ต้องการความช่วยเหลือ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 20 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.บุรีรัมย์</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 50%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 30 คน</span>
+                    <strong class="text-success">สมัครแล้ว 15 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="3">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,artificial">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/ทำถุงผ้าจากเสื้อผ้าเก่า.PNG" class="activity-card-img" alt="จิตอาสาทำถุงผ้าจากเสื้อผ้าเก่า" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-artificial"><i class="fa-solid fa-hands-holding-child"></i> ประดิษฐ์</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 30 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาทำถุงผ้าจากเสื้อผ้าเก่าเพื่อผู้ขาดแคลน</h3>
+                <p class="activity-desc">
+                  นำเสื้อผ้าที่ไม่ใช้แล้วแต่ยังมีสภาพดีมาประดิษฐ์เป็นถุงผ้า เพื่อนำไปมอบให้ผู้สูงอายุ ผู้ป่วย
+                  และประชาชนที่ต้องการความช่วยเหลือ พร้อมส่งเสริมการลดใช้ถุงพลาสติก
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 30 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.มหาสารคาม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 70%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 30 คน</span>
+                    <strong class="text-success">สมัครแล้ว 21 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="4">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,donate">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/จัดถุงยังชีพ.jpg" class="activity-card-img" alt="จิตอาสาจัดถุงยังชีพ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-donate"><i class="fa-solid fa-donate"></i> บริจาค</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 28 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาจัดถุงยังชีพแบ่งปันให้ครอบครัวผู้ยากไร้</h3>
+                <p class="activity-desc">
+                  ร่วมจัดเตรียมข้าวสาร อาหารแห้ง และสิ่งของจำเป็นลงในถุงยังชีพ
+                  เพื่อส่งมอบให้ครอบครัวที่ประสบปัญหาทางเศรษฐกิจหรือได้รับผลกระทบจากภัยพิบัติผ่านหน่วยงานในพื้นที่
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 28 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 09.00-16.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.นครราชสีมา</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 6 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 50%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 100 คน</span>
+                    <strong class="text-success">สมัครแล้ว 50 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="5">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/พี่สอนน้อง.jpg" class="activity-card-img" alt="จิตอาสาพี่สอนน้อง" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 21 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาพี่สอนน้อง อ่านนิทานสร้างจินตนาการ</h3>
+                <p class="activity-desc">
+                  ร่วมจัดกิจกรรมอ่านนิทาน สอนการบ้าน และทำกิจกรรมศิลปะร่วมกับเด็ก ๆ เพื่อส่งเสริมทักษะการอ่าน
+                  ความคิดสร้างสรรค์ และพัฒนาการทางสังคม
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 21 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.กาฬสินธุ์</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 35%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 7 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="6">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 7 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,nature">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/ปลูกต้นไม้.jpg" class="activity-card-img" alt="จิตอาสาปลูกต้นไม้" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-nature"><i class="fa-solid fa-tree"></i> ธรรมชาติ</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 23 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาปลูกต้นไม้เพิ่มพื้นที่สีเขียวให้ชุมชน</h3>
+                <p class="activity-desc">
+                  ร่วมกันปลูกต้นไม้และดูแลพื้นที่สีเขียวในชุมชน เพื่อเพิ่มความร่มรื่น ลดปัญหาสิ่งแวดล้อม
+                  และสร้างจิตสำนึกในการอนุรักษ์ธรรมชาติ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 23 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 08.00-16.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.ร้อยเอ็ด</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 7 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 79%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 100 คน</span>
+                    <strong class="text-success">สมัครแล้ว 79 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="7">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 8 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,nature">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/เก็บขยะชุมชน.jpg" class="activity-card-img" alt="จิตอาสาเก็บขยะและทำความสะอาดชุมชน" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-nature"><i class="fa-solid fa-tree"></i> ธรรมชาติ</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 14 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาเก็บขยะและทำความสะอาดชุมชน</h3>
+                <p class="activity-desc">
+                  ร่วมเก็บขยะในพื้นที่สาธารณะ แยกขยะรีไซเคิลออกจากขยะทั่วไป และทำความสะอาดบริเวณโดยรอบ
+                  เพื่อสร้างสภาพแวดล้อมที่สะอาดและน่าอยู่
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 14 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 07.00-10.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.มหาสารคาม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 95%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 40 คน</span>
+                    <strong class="text-success">สมัครแล้ว 38 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="8">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 9 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,nature">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/คัดแยกขยะ.jpg" class="activity-card-img" alt="จิตอาสาคัดแยกขยะ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-nature"><i class="fa-solid fa-tree"></i> ธรรมชาติ</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 22 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาคัดแยกขยะสร้างประโยชน์เพื่อสังคม</h3>
+                <p class="activity-desc">
+                  ร่วมคัดแยกขวดพลาสติก กระดาษ และวัสดุรีไซเคิล เพื่อนำส่งเข้าสู่กระบวนการรีไซเคิลอย่างเหมาะสม
+                  พร้อมให้ความรู้เรื่องการจัดการขยะในชีวิตประจำวัน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 22 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 09.00-13.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.ขอนแก่น</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 37%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 35 คน</span>
+                    <strong class="text-success">สมัครแล้ว 13 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="9">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 10 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,donate">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/จัดชุดอุปกรการเรียน.avif" class="activity-card-img" alt="จิตอาสาจัดชุดอุปกรณ์การเรียนเพื่อน้อง" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-donate"><i class="fa-solid fa-donate"></i> บริจาค</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 1 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาจัดชุดอุปกรณ์การเรียนเพื่อน้อง</h3>
+                <p class="activity-desc">
+                  รวบรวมดินสอ ยางลบ ไม้บรรทัด สมุด และอุปกรณ์การเรียนที่จำเป็น
+                  นำมาจัดเป็นชุดเพื่อบริจาคให้เด็กนักเรียนที่ขาดแคลนทุนทรัพย์
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 1 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 09.00-13.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.ขอนแก่น</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 50%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 40 คน</span>
+                    <strong class="text-success">สมัครแล้ว 20 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="10">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 11 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,artificial">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/ที่คั่นหนังสือ.jpg" class="activity-card-img" alt="จิตอาสาประดิษฐ์ที่คั่นหนังสือ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-artificial"><i class="fa-solid fa-hands-holding-child"></i> ประดิษฐ์</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 29 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาประดิษฐ์ที่คั่นหนังสือจากกระดาษเหลือใช้</h3>
+                <p class="activity-desc">
+                  นำเศษกระดาษ ลัง และวัสดุเหลือใช้มาประดิษฐ์และออกแบบเป็นที่คั่นหนังสือน่ารัก ๆ เพื่อส่งมอบให้ห้องสมุดชุมชนและโรงเรียนที่ขาดแคลน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 29 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 13.00-16.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.มหาสารคาม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 50%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 30 คน</span>
+                    <strong class="text-success">สมัครแล้ว 15 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="11">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 12 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/สอนผู้สูงอายุใช้สมาร์ทโฟน.jpg" class="activity-card-img" alt="กิจกรรมอาสาสอนผู้สูงอายุใช้สมาร์ทโฟน" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 26 ธ.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">กิจกรรมอาสาสอนผู้สูงอายุใช้สมาร์ทโฟน</h3>
+                <p class="activity-desc">
+                  อาสาสมัครช่วยสอนผู้สูงอายุใช้โทรศัพท์มือถือเบื้องต้น เช่น การโทรออก การส่งข้อความ การใช้วิดีโอคอล
+                  และการระวังมิจฉาชีพออนไลน์
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 26 ธ.ค. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> ศูนย์การเรียนรู้ชุมชน จ.นครราชสีมา</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 75%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 15 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="12">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 13 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,artificial">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/ทำการ์ด.jpg" class="activity-card-img" alt="จิตอาสาประดิษฐ์งานศิลปะส่งกำลังใจให้ผู้ป่วย" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-artificial"><i class="fa-solid fa-hands-holding-child"></i> ประดิษฐ์</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 5 ธ.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาประดิษฐ์งานศิลปะส่งกำลังใจให้ผู้ป่วย</h3>
+                <p class="activity-desc">
+                  ร่วมกันทำการ์ดอวยพรและงานประดิษฐ์จากกระดาษ เพื่อนำไปมอบให้ผู้ป่วยในโรงพยาบาล
+                  เพื่อสร้างกำลังใจและส่งต่อความห่วงใยให้แก่ผู้รับ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 5 ธ.ค. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.ขอนแก่น</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 20%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 25 คน</span>
+                    <strong class="text-success">สมัครแล้ว 5 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="13">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 14 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/วาดภาพการ์ตูน.jpg" class="activity-card-img" alt="โครงการจิตอาสาวาดภาพการ์ตูนนิทาน" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 23 ธ.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการจิตอาสาวาดภาพการ์ตูนนิทานช่วยพัฒนาเยาวชน</h3>
+                <p class="activity-desc">
+                  ร่วมกันส่งเสริมการเรียนรู้ จินตนาการ และคุณธรรมจริยธรรมของเด็กและเยาวชน ผ่านสื่อการ์ตูนนิทานสร้างสรรค์
+                  เพื่อนำไปมอบเป็นสื่อการเรียนรู้ให้กับน้องๆ ในพื้นที่ขาดแคลน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 23 ธ.ค. พ.ศ.2569 ตั้งแต่เวลา 08.30-12.30 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.นครพนม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 25%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 5 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="14">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 15 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,nature">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/เก็บขยะชายหาด.jpg" class="activity-card-img" alt="โครงการจิตอาสาเก็บขยะชายหาด" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-nature"><i class="fa-solid fa-tree"></i> ธรรมชาติ</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 18 ม.ค. พ.ศ.2570</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการจิตอาสาเก็บขยะชายหาดจังหวัดชลบุรี</h3>
+                <p class="activity-desc">
+                  ร่วมกันฟื้นฟูและอนุรักษ์สิ่งแวดล้อมทางทะเล ปกป้องระบบนิเวศชายฝั่ง
+                  และคัดแยกขยะเพื่อการนำกลับมาใช้ใหม่ เพราะทะเลที่สวยงามเริ่มต้นได้จากมือของเราทุกคน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 18 ม.ค. พ.ศ.2570 ตั้งแต่เวลา 08.30-15.30 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.ชลบุรี</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 7 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 52%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 150 คน</span>
+                    <strong class="text-success">สมัครแล้ว 79 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="15">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 16 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,food">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/อาหารกลางวันเด็กด้อยโอกาส.jpg" class="activity-card-img" alt="โครงการมื้ออาหารกลางวันเพื่อเด็กด้อยโอกาส" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-food"><i class="fa-solid fa-utensils"></i> อาหาร</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 18 ธ.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการมื้ออาหารกลางวันเพื่อเด็กด้อยโอกาส</h3>
+                <p class="activity-desc">
+                  ร่วมเป็นส่วนหนึ่งในการส่งมอบมื้ออาหารที่มีประโยชน์และถูกหลักโภชนาการ ให้กับน้องๆ ในพื้นที่ขาดแคลน
+                  มอบพลัง สุขภาพที่ดี และโอกาสในการเรียนรู้เพื่ออนาคตของเด็กทุกคน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 18 ธ.ค. พ.ศ.2569 ตั้งแต่เวลา 10.00-13.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.อุบลราชธานี</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 87%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 15 คน</span>
+                    <strong class="text-success">สมัครแล้ว 13 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="16">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 17 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,donate">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/แบ่งปันเพื่อการเปลี่ยนแปลง.jpg" class="activity-card-img" alt="โครงการจิตอาสาแบ่งปันเพื่อการเปลี่ยนแปลง" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-donate"><i class="fa-solid fa-donate"></i> บริจาค</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 4-6 ธ.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการจิตอาสาแบ่งปันเพื่อการเปลี่ยนแปลง</h3>
+                <p class="activity-desc">
+                  ร่วมเปลี่ยนเสื้อผ้าและของใช้สภาพดีให้กลายเป็นความช่วยเหลือที่ยิ่งใหญ่
+                  ส่งมอบความอบอุ่นและเครื่องนุ่งห่มไปยังผู้ประสบภัยและผู้ขาดแคลนในพื้นที่ห่างไกลกันดาร
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 4-6 ธ.ค. พ.ศ.2569 ตั้งแต่เวลา 08.00-17.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.อุดรธานี</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 2 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 100%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวนไม่จำกัด</span>
+                    <strong class="text-success">เปิดรับต่อเนื่อง</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="17">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 18 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/ส่งหนังสือให้เด็กในพื้นที่ห่างไกล.jpg" class="activity-card-img" alt="โครงการจิตอาสาคัดแยกหนังสือ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 15 ก.พ. พ.ศ.2570</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการจิตอาสาคัดแยกหนังสือส่งต่อให้น้องในพื้นที่ห่างไกล</h3>
+                <p class="activity-desc">
+                  รวบรวม ตรวจสอบ และคัดแยกหนังสือที่มีคุณภาพ นำไปส่งมอบเป็นสื่อการเรียนรู้ให้แก่โรงเรียน ชุมชน
+                  หรือศูนย์การเรียนรู้ในพื้นที่ห่างไกล เพื่อส่งเสริมโอกาสทางการศึกษาและปลูกฝังนิสัยรักการอ่าน
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 15 ก.พ. พ.ศ.2570 ตั้งแต่เวลา 09.00-15.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.เชียงใหม่</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 40%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 60 คน</span>
+                    <strong class="text-success">สมัครแล้ว 24 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="18">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State Box (แสดงเมื่อค้นหาไม่พบ) -->
+          <div id="noActivityFound" class="col-12 text-center py-5" style="display: none;">
+            <div class="p-5 rounded-4 shadow-sm border bg-surface" style="background-color: var(--bg-surface);">
+              <div class="text-warning fs-1 mb-3">
+                <i class="fa-solid fa-magnifying-glass-chart"></i>
+              </div>
+              <h3 class="fw-bold fs-4 mb-2">ไม่พบโครงการจิตอาสาที่คุณค้นหา</h3>
+              <p class="text-muted small mb-4">
+                ลองใช้คำค้นหาอื่น เช่น "ปลูกป่า", "เชียงใหม่", "ทะเล" หรือเลือกหมวดหมู่อื่นเพื่อดูโครงการทั้งหมด
+              </p>
+              <button class="btn-primary-gradient px-4" id="resetFilterBtn">
+                <i class="fa-solid fa-rotate-left me-1"></i> ล้างคำค้นหาและแสดงทั้งหมด
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Pagination (แสดงและเปลี่ยนหน้าได้จริงในธีม Ground Team) -->
+        <nav class="mt-5 d-flex justify-content-center" aria-label="Page navigation">
+          <ul class="ground-pagination gap-2 mb-0" id="activityPagination">
+            <!-- สร้างปุ่มเลขหน้าด้วย JavaScript อัตโนมัติ -->
+          </ul>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer Placeholder -->
+  <div id="footer-placeholder"></div>
+
+  <!-- ปุ่ม Scroll to Top -->
+  <button id="btn-scroll-top" aria-label="เลื่อนขึ้นด้านบน" title="เลื่อนขึ้นด้านบน">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Components Loader -->
+  <script src="assets/js/components.js"></script>
+  <!-- Main JS -->
+  <script src="assets/js/main.js?v=2.2"></script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "password": "0000",
+        "fullname": "ผู้ดูแลระบบ Ground Team (Admin)",
+        "phone": "02-123-4567",
+        "email": "admin@groundteam.org",
+        "province": "กรุงเทพมหานคร",
+        "age": 30,
+        "gender": "ชาย",
+        "role": "admin",
+        "created_at": "2026-01-01 09:00:00"
+    },
+    {
+        "id": 2,
+        "username": "somchai",
+        "password": "1234",
+        "fullname": "สมชาย ใจดี",
+        "phone": "0812345678",
+        "email": "somchai@example.com",
+        "province": "เชียงใหม่",
+        "age": 24,
+        "gender": "ชาย",
+        "role": "user",
+        "created_at": "2026-10-10 14:30:00"
+    },
+    {
+        "id": 3,
+        "username": "nicha",
+        "password": "1234",
+        "fullname": "ณิชา วงศ์สวรรค์",
+        "phone": "0898765432",
+        "email": "nicha@example.com",
+        "province": "ชลบุรี",
+        "age": 21,
+        "gender": "หญิง",
+        "role": "user",
+        "created_at": "2026-10-11 11:20:00"
+    },
+    {
+        "id": 4,
+        "username": "alex",
+        "password": "1234",
+        "fullname": "อเล็กซ์ รัตนโชติ",
+        "phone": "0865554321",
+        "email": "alex@example.com",
+        "province": "กรุงเทพมหานคร",
+        "age": 26,
+        "gender": "lgbtq+",
+        "role": "user",
+        "created_at": "2026-10-11 16:45:00"
+    },
+    {
+        "id": 5,
+        "username": "MayukiFy",
+        "password": "0628313165_Aqws",
+        "fullname": "นัฐภูมิ ธงศรี",
+        "phone": "0628313176",
+        "email": "67011213047@msu.ac.th",
+        "province": "ขอนแก่น",
+        "age": 22,
+        "gender": "ชาย",
+        "role": "user",
+        "created_at": "2026-10-13 16:16:58"
+    },
+    {
+        "id": 6,
+        "username": "Nt561728",
+        "password": "0628313165_Aqws",
+        "fullname": "Mayuki",
+        "phone": "0627741790",
+        "email": "whan0614844@gmail.com",
+        "province": "กรุงเทพมหานคร",
+        "age": 25,
+        "gender": "หญิง",
+        "role": "user",
+        "created_at": "2026-10-14 16:15:20"
+    }
+]

@@ -1,0 +1,1928 @@
+/* ==========================================================================
+   Project: Ground Team - Volunteer & Social Impact Platform
+   Theme: Nature, Modern, Creative, Minimal, Premium Gradient (Green, Blue, Yellow)
+   Description: Main Stylesheet with Responsive, Animations & Dark/Light Mode
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Google Fonts & CSS Custom Properties (Variables)
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+
+:root {
+  /* Font Family */
+  --font-main: 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Primary Brand Colors (Nature: Green, Sky/Ocean: Blue, Sunshine: Yellow) */
+  --color-green: #10b981;
+  --color-green-dark: #059669;
+  --color-green-light: #d1fae5;
+  --color-green-soft: rgba(16, 185, 129, 0.12);
+
+  --color-blue: #0ea5e9;
+  --color-blue-dark: #0284c7;
+  --color-blue-light: #e0f2fe;
+  --color-blue-soft: rgba(14, 165, 233, 0.12);
+
+  --color-yellow: #f59e0b;
+  --color-yellow-dark: #d97706;
+  --color-yellow-light: #fef3c7;
+  --color-yellow-soft: rgba(245, 158, 11, 0.14);
+
+  /* Gradients */
+  --grad-nature: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+  --grad-sunshine: linear-gradient(135deg, #10b981 0%, #0ea5e9 50%, #f59e0b 100%);
+  --grad-accent: linear-gradient(135deg, #0ea5e9 0%, #f59e0b 100%);
+  --grad-soft-bg: linear-gradient(180deg, rgba(209, 250, 229, 0.3) 0%, rgba(224, 242, 254, 0.3) 50%, rgba(254, 243, 199, 0.2) 100%);
+
+  /* Light Theme Colors */
+  --bg-body: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-glass: rgba(255, 255, 255, 0.85);
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f5f9;
+  --border-color: rgba(226, 232, 240, 0.9);
+  --border-focus: rgba(16, 185, 129, 0.5);
+
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 20px 35px -5px rgba(15, 23, 42, 0.12), 0 10px 15px -5px rgba(15, 23, 42, 0.06);
+  --shadow-glow-green: 0 8px 25px rgba(16, 185, 129, 0.35);
+  --shadow-glow-blue: 0 8px 25px rgba(14, 165, 233, 0.35);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 50px;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Dark Theme Variables (Nature Theme: Rich Forest Slate, Emerald, Ocean Cyan, Warm Sunshine)
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --bg-body: #0a141d;
+  --bg-surface: #10222f;
+  --bg-surface-glass: rgba(16, 34, 47, 0.9);
+  --bg-card: #132535;
+  --bg-subtle: #193345;
+  --border-color: rgba(52, 211, 153, 0.22);
+  --border-focus: rgba(52, 211, 153, 0.7);
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-inverse: #0a141d;
+
+  --color-green: #34d399;
+  --color-green-dark: #10b981;
+  --color-green-light: #064e3b;
+  --color-green-soft: rgba(52, 211, 153, 0.18);
+
+  --color-blue: #38bdf8;
+  --color-blue-dark: #0284c7;
+  --color-blue-light: #082f49;
+  --color-blue-soft: rgba(56, 189, 248, 0.18);
+
+  --color-yellow: #fbbf24;
+  --color-yellow-dark: #d97706;
+  --color-yellow-light: #451a03;
+  --color-yellow-soft: rgba(251, 191, 36, 0.18);
+
+  --grad-nature: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+  --grad-sunshine: linear-gradient(135deg, #10b981 0%, #0ea5e9 50%, #f59e0b 100%);
+  --grad-accent: linear-gradient(135deg, #0ea5e9 0%, #f59e0b 100%);
+  --grad-soft-bg: linear-gradient(180deg, rgba(16, 185, 129, 0.12) 0%, rgba(14, 165, 233, 0.08) 50%, rgba(10, 20, 29, 0) 100%);
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 40px -5px rgba(0, 0, 0, 0.7);
+  --shadow-glow-green: 0 8px 25px rgba(52, 211, 153, 0.4);
+  --shadow-glow-blue: 0 8px 25px rgba(56, 189, 248, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   3. Global Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+  overflow-x: hidden;
+  position: relative;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+::selection {
+  background-color: rgba(16, 185, 129, 0.25);
+  color: var(--color-green-dark);
+}
+
+/* --------------------------------------------------------------------------
+   4. Loading Preloader Animation
+   -------------------------------------------------------------------------- */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-body);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+#preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.preloader-spinner {
+  width: 60px;
+  height: 60px;
+  position: relative;
+}
+
+.preloader-spinner::before,
+.preloader-spinner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+
+.preloader-spinner::before {
+  border-top-color: var(--color-green);
+  border-right-color: var(--color-blue);
+  animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.preloader-spinner::after {
+  border-bottom-color: var(--color-yellow);
+  animation: spin 1.8s linear infinite reverse;
+}
+
+.preloader-text {
+  margin-top: 18px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Custom Scrollbar & Scroll-to-Top Button
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-body);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--color-green), var(--color-blue));
+  border-radius: 10px;
+}
+
+#btn-scroll-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--grad-nature);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  box-shadow: var(--shadow-glow-green);
+  transition: all var(--transition-smooth);
+}
+
+#btn-scroll-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#btn-scroll-top:hover {
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 12px 30px rgba(16, 185, 129, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   6. Navigation Bar (Modern Glassmorphism)
+   -------------------------------------------------------------------------- */
+.navbar-custom {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  background-color: var(--bg-surface-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-color);
+  transition: all var(--transition-smooth);
+  padding: 0.85rem 0;
+}
+
+.navbar-custom.scrolled {
+  padding: 0.55rem 0;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Brand Logo */
+.navbar-brand-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--grad-nature);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.15rem;
+  box-shadow: var(--shadow-glow-green);
+  transition: transform var(--transition-smooth);
+}
+
+.navbar-brand-custom:hover .brand-icon {
+  transform: rotate(12deg) scale(1.06);
+}
+
+.brand-text-highlight {
+  background: var(--grad-nature);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Nav Links */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: var(--text-muted) !important;
+  padding: 0.55rem 1.1rem !important;
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: all var(--transition-fast);
+  margin: 0 2px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-green) !important;
+  background-color: var(--color-green-soft);
+}
+
+.navbar-nav .nav-link.active {
+  color: #fff !important;
+  background: var(--grad-nature);
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Theme Toggle Button */
+.btn-theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+}
+
+.btn-theme-toggle:hover {
+  background-color: var(--color-yellow-soft);
+  color: var(--color-yellow);
+  border-color: var(--color-yellow);
+  transform: rotate(25deg);
+}
+
+/* Navbar CTA Button */
+.btn-nav-apply {
+  background: var(--grad-accent);
+  color: #fff !important;
+  font-weight: 600;
+  padding: 0.55rem 1.3rem;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-glow-blue);
+  transition: all var(--transition-smooth);
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-nav-apply:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.4);
+  color: #fff !important;
+}
+
+/* Mobile Toggler */
+.navbar-toggler-custom {
+  border: 1px solid var(--border-color);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.navbar-toggler-custom:focus {
+  box-shadow: 0 0 0 3px var(--border-focus);
+}
+
+/* --------------------------------------------------------------------------
+   7. Typography & Badges
+   -------------------------------------------------------------------------- */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  background-color: var(--color-green-soft);
+  color: var(--color-green-dark);
+  margin-bottom: 12px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+[data-theme="dark"] .section-badge {
+  color: var(--color-green);
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.gradient-text-nature {
+  background: var(--grad-nature);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-sunshine {
+  background: var(--grad-sunshine);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   8. Buttons & Interactive Elements
+   -------------------------------------------------------------------------- */
+.btn-primary-gradient {
+  background: var(--grad-nature);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  box-shadow: var(--shadow-glow-green);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-primary-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45);
+  color: #fff;
+}
+
+.btn-primary-gradient:hover::before {
+  left: 100%;
+}
+
+.btn-outline-custom {
+  background: transparent;
+  color: var(--text-main);
+  border: 2px solid var(--border-color);
+  font-weight: 600;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius-pill);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-outline-custom:hover {
+  border-color: var(--color-green);
+  color: var(--color-green);
+  background-color: var(--color-green-soft);
+  transform: translateY(-3px);
+}
+
+.btn-yellow-gradient {
+  background: linear-gradient(135deg, var(--color-yellow) 0%, #f97316 100%);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 1.8rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.35);
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-yellow-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.45);
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   9. Hero Section
+   -------------------------------------------------------------------------- */
+.hero-section {
+  position: relative;
+  padding: 5rem 0 6rem 0;
+  background: var(--grad-soft-bg);
+  overflow: hidden;
+}
+
+/* Hero Section with Centered Content & Background Image (Request 1) */
+.hero-section-centered {
+  position: relative;
+  padding: 7.5rem 0 8.5rem 0;
+  background: linear-gradient(180deg, rgba(11, 23, 20, 0.72) 0%, rgba(15, 23, 42, 0.82) 100%), 
+              url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1920&q=85') center center / cover no-repeat;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.hero-section-centered .hero-title {
+  color: #ffffff;
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.hero-section-centered .hero-description {
+  color: rgba(248, 250, 252, 0.9);
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 780px;
+  margin: 0 auto 2.2rem auto;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section-centered .section-badge {
+  background: rgba(16, 185, 129, 0.25);
+  color: #6ee7b7;
+  border-color: rgba(110, 231, 183, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.hero-section-centered .btn-outline-custom {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.hero-section-centered .btn-outline-custom:hover {
+  background: var(--color-green);
+  border-color: var(--color-green);
+  color: #ffffff;
+}
+
+.hero-glow-1 {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0) 70%);
+  top: -100px;
+  left: -100px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.hero-glow-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(14, 165, 233, 0) 70%);
+  bottom: 0;
+  right: -50px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+}
+
+.hero-title {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.hero-description {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 540px;
+}
+
+.hero-image-wrapper {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: visible;
+}
+
+.hero-main-img {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-smooth);
+}
+
+.hero-main-img:hover {
+  transform: scale(1.02);
+}
+
+/* Floating Badges on Hero Image */
+.floating-badge {
+  position: absolute;
+  background-color: var(--bg-surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: float 4s ease-in-out infinite alternate;
+}
+
+.floating-badge-1 {
+  bottom: -20px;
+  left: -20px;
+}
+
+.floating-badge-2 {
+  top: -15px;
+  right: -15px;
+  animation-delay: -2s;
+}
+
+.badge-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-12px); }
+}
+
+/* --------------------------------------------------------------------------
+   10. Quick Stats Section
+   -------------------------------------------------------------------------- */
+.stats-section {
+  position: relative;
+  margin-top: -3rem;
+  z-index: 10;
+  margin-bottom: 4rem;
+}
+
+.stat-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--grad-nature);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-green);
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+.stat-number {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   11. Activity / Volunteer Cards
+   -------------------------------------------------------------------------- */
+.activity-card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.activity-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.activity-card-img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.activity-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.activity-card:hover .activity-card-img {
+  transform: scale(1.08);
+}
+
+.category-tags-wrap {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  z-index: 2;
+  max-width: 85%;
+}
+
+.category-pill {
+  padding: 4px 11px;
+  border-radius: var(--radius-pill);
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.2px;
+  transition: transform var(--transition-fast);
+}
+
+.category-pill:hover {
+  transform: translateY(-1px);
+}
+
+.pill-recruiting { background-color: rgba(16, 185, 129, 0.92); }
+.pill-edu { background-color: rgba(245, 158, 11, 0.92); }
+.pill-nature { background-color: rgba(14, 165, 233, 0.92); }
+.pill-donate { background-color: rgba(139, 92, 246, 0.92); }
+.pill-artificial { background-color: rgba(236, 72, 153, 0.92); }
+.pill-food { background-color: rgba(239, 68, 68, 0.92); }
+
+.category-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
+}
+
+.tag-green { background-color: rgba(16, 185, 129, 0.9); }
+.tag-blue { background-color: rgba(14, 165, 233, 0.9); }
+.tag-yellow { background-color: rgba(245, 158, 11, 0.9); }
+
+.activity-date-info {
+  font-size: 0.85rem;
+  color: var(--color-green);
+  font-weight: 500;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .activity-date-info {
+  color: #34d399;
+}
+
+.date-badge {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background-color: rgba(15, 23, 42, 0.75);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.activity-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.activity-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+  line-height: 1.35;
+}
+
+.activity-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.activity-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.activity-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activity-progress-wrap {
+  margin-bottom: 1.25rem;
+}
+
+.progress-custom {
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--bg-subtle);
+  overflow: hidden;
+}
+
+.progress-bar-nature {
+  background: var(--grad-nature);
+  border-radius: var(--radius-pill);
+  transition: width 1s ease;
+}
+
+.quota-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+
+/* --------------------------------------------------------------------------
+   12. Filter Tabs
+   -------------------------------------------------------------------------- */
+.filter-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.btn-filter {
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-filter:hover {
+  color: var(--color-green);
+  border-color: var(--color-green);
+  background-color: var(--color-green-soft);
+}
+
+.btn-filter.active {
+  background: var(--grad-nature);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+/* --------------------------------------------------------------------------
+   Pagination Custom (Ultra-Modern Nature Theme for Ground Team)
+   -------------------------------------------------------------------------- */
+.pagination.pagination-custom,
+.ground-pagination,
+#activityPagination {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  list-style: none !important;
+  padding: 8px 16px !important;
+  margin: 0 auto !important;
+  border-radius: 50px !important;
+  background-color: var(--bg-surface) !important;
+  border: 1.5px solid var(--border-color) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  --bs-pagination-padding-x: 0;
+  --bs-pagination-padding-y: 0;
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-width: 0;
+  --bs-pagination-border-color: transparent;
+  --bs-pagination-active-bg: transparent;
+  --bs-pagination-disabled-bg: transparent;
+}
+
+#activityPagination .page-item,
+.pagination-custom .page-item,
+.ground-pagination .page-item {
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+#activityPagination .page-item:not(:first-child) .page-link,
+.pagination-custom .page-item:not(:first-child) .page-link,
+.ground-pagination .page-item:not(:first-child) .page-link {
+  margin-left: 0 !important;
+}
+
+#activityPagination .page-item:first-child .page-link,
+#activityPagination .page-item:last-child .page-link,
+.pagination-custom .page-item:first-child .page-link,
+.pagination-custom .page-item:last-child .page-link,
+.ground-pagination .page-item:first-child .page-link,
+.ground-pagination .page-item:last-child .page-link {
+  border-radius: 50px !important;
+}
+
+#activityPagination .page-link,
+.pagination-custom .page-link,
+.ground-pagination .page-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: 'Prompt', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  min-width: 44px !important;
+  height: 44px !important;
+  padding: 0 16px !important;
+  border-radius: 50px !important;
+  background: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border: 1.5px solid var(--border-color) !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  user-select: none !important;
+}
+
+#activityPagination .page-link.page-link-num,
+.pagination-custom .page-link.page-link-num,
+.ground-pagination .page-link.page-link-num {
+  min-width: 44px !important;
+  width: 44px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+
+#activityPagination .page-link:hover,
+.pagination-custom .page-link:hover,
+.ground-pagination .page-link:hover {
+  color: var(--color-green) !important;
+  background-color: var(--color-green-soft) !important;
+  border-color: var(--color-green) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.2) !important;
+}
+
+#activityPagination .page-item.active .page-link,
+.pagination-custom .page-item.active .page-link,
+.ground-pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  font-weight: 700 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4) !important;
+}
+
+#activityPagination .page-item.disabled .page-link,
+.pagination-custom .page-item.disabled .page-link,
+.ground-pagination .page-item.disabled .page-link {
+  opacity: 0.45 !important;
+  color: var(--text-muted) !important;
+  background: transparent !important;
+  border-color: var(--border-color) !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Dark mode overrides for pagination */
+[data-theme="dark"] #activityPagination,
+[data-theme="dark"] .pagination-custom,
+[data-theme="dark"] .ground-pagination {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] #activityPagination .page-link,
+[data-theme="dark"] .pagination-custom .page-link,
+[data-theme="dark"] .ground-pagination .page-link {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] #activityPagination .page-link:hover,
+[data-theme="dark"] .pagination-custom .page-link:hover,
+[data-theme="dark"] .ground-pagination .page-link:hover {
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] #activityPagination .page-item.active .page-link,
+[data-theme="dark"] .pagination-custom .page-item.active .page-link,
+[data-theme="dark"] .ground-pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+[data-theme="dark"] #activityPagination .page-item.disabled .page-link,
+[data-theme="dark"] .pagination-custom .page-item.disabled .page-link,
+[data-theme="dark"] .ground-pagination .page-item.disabled .page-link {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #64748b !important;
+}
+
+@media (max-width: 575.98px) {
+  .pagination-custom {
+    gap: 4px;
+    padding: 6px 10px;
+  }
+  .pagination-custom .page-link {
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. How to Apply Roadmap / Steps
+   -------------------------------------------------------------------------- */
+.step-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 2.2rem 1.8rem;
+  text-align: center;
+  position: relative;
+  transition: all var(--transition-smooth);
+  box-shadow: var(--shadow-sm);
+  height: 100%;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-blue);
+}
+
+.step-number {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--grad-sunshine);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.step-icon-box {
+  width: 70px;
+  height: 70px;
+  border-radius: 20px;
+  background-color: var(--color-blue-soft);
+  color: var(--color-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0.5rem auto 1.5rem auto;
+  transition: all var(--transition-smooth);
+}
+
+.step-card:hover .step-icon-box {
+  transform: scale(1.1) rotate(6deg);
+  background: var(--grad-accent);
+  color: #fff;
+}
+
+.step-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.step-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   14. Values & Impact / Testimonials
+   -------------------------------------------------------------------------- */
+.feature-box {
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-smooth);
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-green);
+  box-shadow: var(--shadow-md);
+}
+
+.testimonial-card {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  height: 100%;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-yellow);
+}
+
+.avatar-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-green);
+}
+
+/* --------------------------------------------------------------------------
+   15. Contact & Form Controls
+   -------------------------------------------------------------------------- */
+.contact-info-card {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 1.8rem;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: all var(--transition-smooth);
+}
+
+.contact-info-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-blue);
+  box-shadow: var(--shadow-md);
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--color-blue-soft);
+  color: var(--color-blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.form-control-custom,
+.form-select-custom {
+  width: 100%;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+}
+
+.form-control-custom:focus,
+.form-select-custom:focus {
+  outline: none;
+  border-color: var(--color-green);
+  box-shadow: 0 0 0 3px var(--color-green-soft);
+}
+
+.form-label-custom {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+
+/* --------------------------------------------------------------------------
+   16. Volunteer Modal Styles
+   -------------------------------------------------------------------------- */
+.modal-content-custom {
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+.modal-header-gradient {
+  background: var(--grad-nature);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  border: none;
+}
+
+.btn-close-white {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* --------------------------------------------------------------------------
+   17. Footer Styles (Exact Requirement)
+   -------------------------------------------------------------------------- */
+.footer-custom {
+  background-color: var(--bg-surface);
+  border-top: 1px solid var(--border-color);
+  padding: 4.5rem 0 2rem 0;
+  position: relative;
+  transition: background-color var(--transition-smooth);
+}
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+.footer-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-heading::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 28px;
+  height: 3px;
+  border-radius: 4px;
+  background: var(--grad-nature);
+}
+
+.footer-links li {
+  margin-bottom: 0.65rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-links a:hover {
+  color: var(--color-green);
+  transform: translateX(4px);
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+}
+
+.social-icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--bg-subtle);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-smooth);
+  font-size: 0.95rem;
+}
+
+.social-icon-btn:hover {
+  background: var(--grad-nature);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Footer Bottom Strip with Required Text */
+.footer-bottom {
+  margin-top: 3.5rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.footer-copyright {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.footer-designer {
+  font-size: 0.88rem;
+  color: var(--color-green);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   18. Scroll Reveal Animation Classes
+   -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* --------------------------------------------------------------------------
+   19. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 991.98px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .navbar-collapse {
+    background-color: var(--bg-surface);
+    padding: 1.2rem;
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+  }
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem !important;
+    margin: 4px 0;
+  }
+  .floating-badge {
+    position: static;
+    margin-top: 15px;
+    animation: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .hero-title {
+    font-size: 2.1rem;
+  }
+  .section-title {
+    font-size: 1.85rem;
+  }
+  .stats-section {
+    margin-top: -1rem;
+  }
+  #btn-scroll-top {
+    bottom: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. Dark Mode High-Contrast & Theme Alignment Overrides (Nature Theme)
+   -------------------------------------------------------------------------- */
+[data-theme="dark"],
+[data-bs-theme="dark"] {
+  /* Bootstrap 5.3 Theme Core Overrides */
+  --bs-body-color: #f8fafc !important;
+  --bs-body-color-rgb: 248, 250, 252 !important;
+  --bs-body-bg: #0a141d !important;
+  --bs-body-bg-rgb: 10, 20, 29 !important;
+  --bs-secondary-color: #cbd5e1 !important;
+  --bs-tertiary-color: #94a3b8 !important;
+  --bs-emphasis-color: #ffffff !important;
+  --bs-border-color: rgba(52, 211, 153, 0.22) !important;
+  --bs-card-bg: #10222f !important;
+  --bs-card-color: #f8fafc !important;
+  --bs-table-color: #f8fafc !important;
+  --bs-table-bg: #10222f !important;
+  --bs-link-color: #34d399 !important;
+  --bs-link-hover-color: #6ee7b7 !important;
+}
+
+[data-theme="dark"] body,
+[data-bs-theme="dark"] body {
+  background-color: var(--bg-body) !important;
+  color: #f8fafc !important;
+}
+
+/* 1. ข้อความทั่วไปและหัวเรื่อง (Headings & Typography) */
+[data-theme="dark"] h1, [data-bs-theme="dark"] h1,
+[data-theme="dark"] h2, [data-bs-theme="dark"] h2,
+[data-theme="dark"] h3, [data-bs-theme="dark"] h3,
+[data-theme="dark"] h4, [data-bs-theme="dark"] h4,
+[data-theme="dark"] h5, [data-bs-theme="dark"] h5,
+[data-theme="dark"] h6, [data-bs-theme="dark"] h6,
+[data-theme="dark"] .h1, [data-bs-theme="dark"] .h1,
+[data-theme="dark"] .h2, [data-bs-theme="dark"] .h2,
+[data-theme="dark"] .h3, [data-bs-theme="dark"] .h3,
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .activity-title,
+[data-theme="dark"] .step-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] p,
+[data-theme="dark"] li,
+[data-theme="dark"] label {
+  color: #f1f5f9;
+}
+
+/* 2. แก้ปัญหาตัวหนังสือจม: Text Muted, Secondary, และคำบรรยายย่อย (สว่าง ชัดเจน นุ่มตา) */
+[data-theme="dark"] .text-muted,
+[data-bs-theme="dark"] .text-muted,
+[data-theme="dark"] .text-secondary,
+[data-bs-theme="dark"] .text-secondary,
+[data-theme="dark"] .text-body-secondary,
+[data-bs-theme="dark"] .text-body-secondary,
+[data-theme="dark"] small,
+[data-theme="dark"] .small,
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] .hero-description,
+[data-theme="dark"] .activity-desc,
+[data-theme="dark"] .step-desc,
+[data-theme="dark"] .footer-desc,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .quota-text,
+[data-theme="dark"] .activity-meta,
+[data-theme="dark"] .activity-meta-item {
+  color: #cbd5e1 !important; /* Slate-300: สว่าง คมชัด ไม่จมกับพื้นหลัง */
+}
+
+/* 3. Text Dark และ Text White Utilities */
+[data-theme="dark"] .text-dark:not(.badge.bg-warning):not(.btn-warning):not(.badge.bg-warning *):not(.btn-warning *),
+[data-theme="dark"] .text-body {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .text-black-50 {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .text-white-50 {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+/* 4. Text Color Accent Utilities (ปรับให้สว่างเด่นชัด ไม่จมกับพื้นหลังมืด) */
+[data-theme="dark"] .text-success { color: #34d399 !important; }
+[data-theme="dark"] .text-primary { color: #38bdf8 !important; }
+[data-theme="dark"] .text-info    { color: #38bdf8 !important; }
+[data-theme="dark"] .text-warning { color: #fbbf24 !important; }
+[data-theme="dark"] .text-danger  { color: #f87171 !important; }
+
+/* 5. ปุ่มและป้ายสีเหลือง (Warning) - ตัวหนังสือต้องเป็นสีเข้มเสมอเพื่อความคมชัด */
+[data-theme="dark"] .badge.bg-warning,
+[data-theme="dark"] .btn-warning,
+[data-theme="dark"] .bg-warning {
+  background-color: #fbbf24 !important;
+  color: #0a141d !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .badge.bg-warning *,
+[data-theme="dark"] .btn-warning *,
+[data-theme="dark"] .bg-warning * {
+  color: #0a141d !important;
+}
+
+/* 6. การ์ดและพื้นผิว (Cards & Surfaces) */
+[data-theme="dark"] .card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .testimonial-card,
+[data-theme="dark"] .contact-info-card,
+[data-theme="dark"] .feature-box,
+[data-theme="dark"] .profile-card,
+[data-theme="dark"] .admin-stat-card {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .card-body,
+[data-theme="dark"] .card-header,
+[data-theme="dark"] .card-footer {
+  color: #f8fafc !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .bg-white,
+[data-theme="dark"] .bg-light,
+[data-theme="dark"] .bg-body {
+  background-color: var(--bg-surface) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .bg-subtle {
+  background-color: var(--bg-subtle) !important;
+}
+
+/* 7. การ์ดกิจกรรมจิตอาสา (Activity Cards) */
+[data-theme="dark"] .activity-card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .activity-card:hover {
+  border-color: rgba(52, 211, 153, 0.5) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .stat-number {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .progress-custom {
+  background-color: #193345 !important;
+}
+
+/* 8. ช่องค้นหาและฟอร์มข้อมูล (Form Controls & Inputs) */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-control-custom,
+[data-theme="dark"] .form-select-custom {
+  background-color: #142736 !important;
+  border-color: rgba(52, 211, 153, 0.28) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-control-custom:focus,
+[data-theme="dark"] .form-select-custom:focus {
+  border-color: #34d399 !important;
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.25) !important;
+  background-color: #162b3c !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder,
+[data-theme="dark"] .form-control::placeholder,
+[data-theme="dark"] .form-control-custom::placeholder {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] select option {
+  background-color: #10222f !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .form-label,
+[data-theme="dark"] .form-label-custom {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .input-group-text {
+  background-color: #183144 !important;
+  border-color: rgba(52, 211, 153, 0.28) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .form-check-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] #activitySearchInput {
+  color: #ffffff !important;
+}
+
+/* 9. เมนูกรองกิจกรรม (Filter Tabs) */
+[data-theme="dark"] .btn-filter {
+  background-color: var(--bg-surface) !important;
+  border-color: rgba(52, 211, 153, 0.25) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .btn-filter:hover {
+  background-color: rgba(52, 211, 153, 0.15) !important;
+  border-color: #34d399 !important;
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .btn-filter.active {
+  background: var(--grad-nature) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* 10. กล่องแจ้งเตือน (Alerts) */
+[data-theme="dark"] .alert-danger {
+  background-color: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .alert-success {
+  background-color: rgba(16, 185, 129, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #6ee7b7 !important;
+}
+
+[data-theme="dark"] .alert-warning {
+  background-color: rgba(245, 158, 11, 0.18) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #fde68a !important;
+}
+
+[data-theme="dark"] .alert-info {
+  background-color: rgba(14, 165, 233, 0.18) !important;
+  border-color: rgba(14, 165, 233, 0.4) !important;
+  color: #7dd3fc !important;
+}
+
+/* 11. FAQ Accordion (หน้าวิธีสมัคร) */
+[data-theme="dark"] .accordion,
+[data-theme="dark"] .accordion-item {
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .accordion-button {
+  background-color: var(--bg-surface) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .accordion-button:not(.collapsed) {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .accordion-button::after {
+  filter: invert(1) brightness(1.5) !important;
+}
+
+[data-theme="dark"] .accordion-body {
+  background-color: var(--bg-surface) !important;
+  color: #cbd5e1 !important;
+}
+
+/* 12. ตารางข้อมูล (Table ใน information.php) */
+[data-theme="dark"] .table,
+[data-theme="dark"] .table-custom {
+  --bs-table-color: #f8fafc !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-border-color: rgba(52, 211, 153, 0.2) !important;
+  --bs-table-hover-bg: rgba(52, 211, 153, 0.08) !important;
+  --bs-table-hover-color: #ffffff !important;
+  background-color: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .table > :not(caption) > * > * {
+  background-color: transparent !important;
+  color: #f8fafc !important;
+  border-bottom-color: rgba(52, 211, 153, 0.15) !important;
+}
+
+[data-theme="dark"] .table th,
+[data-theme="dark"] .table-custom th {
+  background-color: #152a3b !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid rgba(52, 211, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .table td,
+[data-theme="dark"] .table-custom td {
+  color: #f8fafc !important;
+  border-bottom: 1px solid rgba(52, 211, 153, 0.15) !important;
+}
+
+/* 13. ป้าย Badge และโค้ด */
+[data-theme="dark"] code {
+  background-color: #193345 !important;
+  color: #6ee7b7 !important;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+}
+
+[data-theme="dark"] .badge.bg-light {
+  background-color: #193345 !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+}
+
+[data-theme="dark"] .badge.bg-white {
+  background-color: #193345 !important;
+  color: #34d399 !important;
+  border: 1px solid rgba(52, 211, 153, 0.25) !important;
+}
+
+[data-theme="dark"] .badge.bg-secondary {
+  background-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+/* 14. หน้าโปรไฟล์ (Profile Page) */
+[data-theme="dark"] .profile-info-row {
+  border-bottom-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .profile-label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .profile-val {
+  color: #ffffff !important;
+}
+
+/* 15. Modals */
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .modal-content-custom {
+  background-color: #10222f !important;
+  border-color: rgba(52, 211, 153, 0.3) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .modal-body {
+  color: #f8fafc !important;
+}
+
+/* 16. Navbar & Footer */
+[data-theme="dark"] .navbar-custom {
+  background-color: var(--bg-surface-glass) !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .nav-link {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .nav-link:hover,
+[data-theme="dark"] .nav-link.active {
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .footer-custom {
+  background-color: #0b1722 !important;
+  border-top-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .footer-desc {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .footer-heading {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .footer-links a {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .footer-links a:hover {
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+  border-top-color: rgba(52, 211, 153, 0.15) !important;
+}
+
+[data-theme="dark"] .footer-copyright {
+  color: #94a3b8 !important;
+}
+
+/* 17. ปุ่ม Outline */
+[data-theme="dark"] .btn-outline-custom {
+  border-color: rgba(52, 211, 153, 0.45) !important;
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .btn-outline-custom:hover {
+  background-color: rgba(52, 211, 153, 0.2) !important;
+  border-color: #34d399 !important;
+  color: #6ee7b7 !important;
+}
+

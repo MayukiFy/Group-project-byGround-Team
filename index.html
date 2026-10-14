@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <!-- การกำหนดข้อมูลพื้นฐานของเอกสาร (Meta Tags) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ground Team | แพลตฟอร์มอาสาสมัคร & กิจกรรมเพื่อสังคมและธรรมชาติ</title>
+  <meta name="description" content="แพลตฟอร์มศูนย์รวมกิจกรรมจิตอาสาเพื่อสังคมและสิ่งแวดล้อม ปลูกป่า พิทักษ์ทะเล และพัฒนาชุมชน สมัครง่าย ได้เพื่อนใหม่ พร้อมเกียรติบัตรรับรองชั่วโมงจิตอาสา">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+
+  <!-- Bootstrap 5 CSS ผ่าน CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+
+  <!-- Font Awesome 6 Icons ผ่าน CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- สไตล์หลักของโครงการ (Custom CSS) -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="home">
+
+  <!-- =========================================================================
+       1. Preloader Loading Animation
+       ========================================================================= -->
+  <div id="preloader">
+    <div class="preloader-spinner"></div>
+    <div class="preloader-text">
+      <i class="fa-solid fa-leaf text-success me-1"></i> GROUND TEAM กำลังเชื่อมต่อพลังจิตอาสา...
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. Navigation Bar (โหลดผ่าน components.js เพื่อให้แก้ไขที่จุดเดียวได้ทุกหน้า)
+       ========================================================================= -->
+  <div id="navbar-placeholder"></div>
+
+  <!-- =========================================================================
+       3. Main Content
+       ========================================================================= -->
+  <main>
+    <!-- -----------------------------------------------------------------------
+         Hero Section: ปรับให้รูปภาพเป็นพื้นหลังและเนื้อหาอยู่กึ่งกลาง (ตามข้อกำหนดที่ 1)
+         ----------------------------------------------------------------------- -->
+    <section class="hero-section hero-section-centered text-center">
+      <div class="hero-glow-1"></div>
+      <div class="hero-glow-2"></div>
+      <div class="container position-relative z-2">
+        <div class="row justify-content-center">
+          <div class="col-lg-10 col-xl-9 reveal">
+            <h1 class="hero-title">
+              ร่วมสร้างโลกและสังคมให้น่าอยู่<br>
+              <span class="gradient-text-nature" style="filter: drop-shadow(0 2px 10px rgba(16,185,129,0.4));">พร้อมส่งต่อรอยยิ้มไปกับเรา</span>
+            </h1>
+            <p class="hero-description">
+              แพลตฟอร์มรวมกิจกรรมจิตอาสา ทั้งการฟื้นฟูธรรมชาติ อนุรักษ์ทะเล สอนหนังสือ และลงพื้นที่ </p>
+            <p class="hero-description">เริ่มต้นง่าย สมัครง่าย ปลอดภัย สมัครเลย</p>
+            
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+              <a href="activities.html" class="btn-primary-gradient px-4 py-3 fs-6">
+                <i class="fa-solid fa-compass me-1"></i> ค้นหากิจกรรมจิตอาสา
+              </a>
+              <a href="how-to-apply.html" class="btn-outline-custom px-4 py-3 fs-6">
+                <i class="fa-solid fa-circle-play me-1"></i> ดูวิธีสมัครง่ายๆ
+              </a>
+            </div>
+
+            <!-- Centered Trust Badges -->
+            <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 gap-md-4 text-white-50 small mt-4 pt-2">
+              <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
+                <i class="fa-solid fa-certificate text-warning fs-5"></i>
+                <span class="text-white">มีเกียรติบัตรรับรอง</span>
+              </div>
+              <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
+                <i class="fa-solid fa-shield-halved text-success fs-5"></i>
+                <span class="text-white">มีประกันอุบัติเหตุฟรี</span>
+              </div>
+              <div class="d-flex align-items-center gap-2 px-3 py-2 rounded-pill" style="background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);">
+                <i class="fa-solid fa-clock text-info fs-5"></i>
+                <span class="text-white">บันทึกชั่วโมงจิตอาสาได้</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         Stats Section: ตัวเลขสถิติความสำเร็จ (Animated Number Counter)
+         ----------------------------------------------------------------------- -->
+    <section class="container stats-section">
+      <div class="row g-3">
+        <div class="col-lg-3 col-sm-6 reveal">
+          <div class="stat-card">
+            <div class="text-success mb-2 fs-2"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-number"><span class="counter-val" data-target="15420">0</span>+</div>
+            <div class="stat-label">อาสาสมัครเข้าร่วมโครงการ</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 reveal reveal-delay-1">
+          <div class="stat-card">
+            <div class="text-info mb-2 fs-2"><i class="fa-solid fa-list-check"></i></div>
+            <div class="stat-number"><span class="counter-val" data-target="128">0</span>+</div>
+            <div class="stat-label">โครงการสำเร็จลุล่วง</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 reveal reveal-delay-2">
+          <div class="stat-card">
+            <div class="text-warning mb-2 fs-2"><i class="fa-solid fa-map-location-dot"></i></div>
+            <div class="stat-number"><span class="counter-val" data-target="77">0</span></div>
+            <div class="stat-label">จังหวัดทั่วประเทศไทย</div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 reveal reveal-delay-3">
+          <div class="stat-card">
+            <div class="text-primary mb-2 fs-2"><i class="fa-solid fa-award"></i></div>
+            <div class="stat-number"><span class="counter-val" data-target="98">0</span>%</div>
+            <div class="stat-label">ความพึงพอใจของอาสาสมัคร</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         Featured Activities: กิจกรรมจิตอาสาแนะนำ
+         ----------------------------------------------------------------------- -->
+    <section class="py-5">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="section-badge">
+            <i class="fa-solid fa-fire text-warning"></i> กิจกรรมยอดนิยม
+          </span>
+          <h2 class="section-title">โครงการจิตอาสา <span class="gradient-text-nature">เปิดรับสมัครตอนนี้</span></h2>
+          <p class="section-subtitle">
+            เลือกโครงการที่คุณสนใจและร่วมเดินทางสร้างสิ่งดีๆ ร่วมกับเพื่อนใหม่ที่มีหัวใจรักสิ่งแวดล้อม
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Activity Card 1 -->
+          <!-- Card 1 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/กระดาษทำมือ.jpeg" class="activity-card-img" alt="จิตอาสาทำสมุดทำมือ" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 25 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาทำสมุดทำมือจากกระดาษรีไซเคิลให้น้อง ๆ ด้อยโอกาส</h3>
+                <p class="activity-desc">
+                  ร่วมทำสมุดจากกระดาษเหลือใช้ ที่นำกลับมารีไซเคิลให้เป็นสมุดที่พร้อมใช้งานอีกครั้ง
+                  เพื่อนำไปบริจาคต่อให้กับน้อง ๆ ที่ขาดแคลนทุนทรัพย์ หรือน้อง ๆ ที่อยู่ตามถิ่นทุรกันดารทั่วประเทศ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 25 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 13.00-17.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.มหาสารคาม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 4 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 30%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 50 คน</span>
+                    <strong class="text-success">สมัครแล้ว 15 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="1">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,food">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/แจกอาหารกลางวันเด็ก.jpg" class="activity-card-img" alt="โครงการมื้ออาหารกลางวัน เพื่อเด็ก" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-food"><i class="fa-solid fa-utensils"></i> อาหาร</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 28 ต.ค. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">โครงการมื้ออาหารกลางวัน เพื่อเด็ก</h3>
+                <p class="activity-desc">
+                  จิตอาสาไปร่วมกันช่วยทำมื้ออาหารกลางวันให้แก่เด็ก ๆ เพื่อช่วยในเรื่องของโภชนาการของน้อง ๆ
+                  ในวัยเรียนและยังเป็นการช่วยลดค่าใช้จ่ายในครัวเรือนให้แก่ครอบครัวของเด็ก ๆ
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 28 ต.ค. พ.ศ.2569 ตั้งแต่เวลา 10.00-15.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.นครพนม</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 5 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 25%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 5 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="2">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-lg-4 col-md-6 activity-item" data-category="recruiting,edu">
+            <div class="activity-card">
+              <div class="activity-card-img-wrap">
+                <img src="assets/images/พี่สอนน้อง.jpg" class="activity-card-img" alt="จิตอาสาพี่สอนน้อง" loading="lazy">
+                <div class="category-tags-wrap">
+                  <span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>
+                  <span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>
+                </div>
+                <span class="date-badge"><i class="fa-regular fa-calendar"></i> 21 พ.ย. พ.ศ.2569</span>
+              </div>
+              <div class="activity-body">
+                <h3 class="activity-title">จิตอาสาพี่สอนน้อง อ่านนิทานสร้างจินตนาการ</h3>
+                <p class="activity-desc">
+                  ร่วมจัดกิจกรรมอ่านนิทาน สอนการบ้าน และทำกิจกรรมศิลปะร่วมกับเด็ก ๆ เพื่อส่งเสริมทักษะการอ่าน
+                  ความคิดสร้างสรรค์ และพัฒนาการทางสังคม
+                </p>
+                <div class="activity-date-info">
+                  <i class="fa-regular fa-clock"></i> วันที่ 21 พ.ย. พ.ศ.2569 ตั้งแต่เวลา 09.00-12.00 น.
+                </div>
+                <div class="activity-meta">
+                  <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> จ.กาฬสินธุ์</div>
+                  <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> 3 ชั่วโมง</div>
+                </div>
+                <div class="activity-progress-wrap">
+                  <div class="progress-custom">
+                    <div class="progress-bar-nature" style="width: 35%; height: 100%;"></div>
+                  </div>
+                  <div class="quota-text">
+                    <span>รับจำนวน 20 คน</span>
+                    <strong class="text-success">สมัครแล้ว 7 คน</strong>
+                  </div>
+                </div>
+                <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="6">
+                  <i class="fa-solid fa-hand-holding-heart"></i> สมัครร่วมโครงการนี้
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="text-center mt-5">
+          <a href="activities.html" class="btn-outline-custom">
+            <span>ดูงานจิตอาสาทั้งหมด</span> <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- -----------------------------------------------------------------------
+         How It Works Preview: 4 ขั้นตอนง่ายๆ
+         ----------------------------------------------------------------------- -->
+    <section class="py-5">
+      <div class="container py-4">
+        <div class="text-center mb-5 reveal">
+          <h2 class="section-title">4 สเต็ปง่ายๆ <span class="gradient-text-nature">ในการร่วมกิจกรรม</span></h2>
+          <p class="section-subtitle">
+            เริ่มต้นเป็นอาสาสมัครได้ในเวลาไม่ถึง 2 นาที ไม่ยุ่งยาก และไม่มีค่าธรรมเนียมแอบแฝง
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-3 col-md-6 reveal">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div class="step-icon-box"><i class="fa-solid fa-magnifying-glass"></i></div>
+              <h4 class="step-title">เลือกกิจกรรม</h4>
+              <p class="step-desc">เลือกโครงการและวันที่ที่คุณสะดวก จากหมวดหมู่สิ่งแวดล้อม การศึกษา หรือชุมชน</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 reveal reveal-delay-1">
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div class="step-icon-box"><i class="fa-solid fa-file-signature"></i></div>
+              <h4 class="step-title">กรอกข้อมูลสมัคร</h4>
+              <p class="step-desc">กดปุ่มสมัคร กรอกข้อมูลชื่อ เบอร์โทร และทักษะของคุณผ่านระบบออนไลน์</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 reveal reveal-delay-2">
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div class="step-icon-box"><i class="fa-solid fa-envelope-circle-check"></i></div>
+              <h4 class="step-title">รับการยืนยัน</h4>
+              <p class="step-desc">รับอีเมลยืนยันสิทธิ์ พร้อมกำหนดการเดินทาง และกลุ่มไลน์ประสานงานโครงการ</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 reveal reveal-delay-3">
+            <div class="step-card">
+              <div class="step-number">4</div>
+              <div class="step-icon-box"><i class="fa-solid fa-award"></i></div>
+              <h4 class="step-title">ลุยงาน & รับใบเซอร์</h4>
+              <p class="step-desc">ร่วมลงมือทำกิจกรรมด้วยความสุข และรับเกียรติบัตรรับรองชั่วโมงจิตอาสาหลังจบงาน</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- -----------------------------------------------------------------------
+         Call to Action Banner: เชิญชวนร่วมสมัครจิตอาสา
+         ----------------------------------------------------------------------- -->
+    <section class="py-5 position-relative overflow-hidden">
+      <div class="container py-4">
+        <div class="card border-0 rounded-4 p-5 text-white position-relative overflow-hidden" 
+             style="background: var(--grad-nature); box-shadow: var(--shadow-glow-green);">
+          <div class="position-absolute end-0 top-0 opacity-25 p-4 d-none d-md-block">
+            <i class="fa-solid fa-seedling" style="font-size: 15rem;"></i>
+          </div>
+          <div class="row align-items-center position-relative z-2">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+              <h2 class="fw-bold display-6 mb-3">พร้อมที่จะเป็นพลังเล็กๆ ที่สร้างการเปลี่ยนแปลงแล้วหรือยัง?</h2>
+              <p class="fs-5 mb-0 text-white-50">
+                ร่วมลงมือฟื้นฟูธรรมชาติและเติมเต็มรอยยิ้มให้ชุมชนกับ Ground Team ได้เลยวันนี้ ไม่มีค่าใช้จ่ายในการสมัคร
+              </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <button class="btn-yellow-gradient fs-6 px-4 py-3 btn-quick-apply" data-activity-id="1">
+                <i class="fa-solid fa-hand-holding-heart me-1"></i> สมัครเป็นอาสาสมัครเลย!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       4. Footer (โหลดผ่าน components.js แสดงข้อความตามเงื่อนไขที่กำหนด)
+       ========================================================================= -->
+  <div id="footer-placeholder"></div>
+
+  <!-- ปุ่ม Scroll to Top -->
+  <button id="btn-scroll-top" aria-label="เลื่อนขึ้นด้านบน" title="เลื่อนขึ้นด้านบน">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- =========================================================================
+       5. JavaScript Scripts
+       ========================================================================= -->
+  <!-- Bootstrap 5 Bundle JS ผ่าน CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Components Loader: โหลด Navigation Bar และ Footer เข้ามายังทุกหน้า -->
+  <script src="assets/js/components.js"></script>
+
+  <!-- JavaScript หลักของเว็บไซต์ -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
+
