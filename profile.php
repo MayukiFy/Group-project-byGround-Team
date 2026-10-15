@@ -16,6 +16,20 @@ if (is_admin()) {
 $user = get_current_user_data();
 $is_just_registered = isset($_GET['registered']) && $_GET['registered'] == '1';
 
+// ดึงประวัติการสมัครกิจกรรมจิตอาสาของผู้ใช้คนนี้จาก Table 3: application
+$my_applications = db_get_applications_by_user($user['id']);
+$total_applied = count($my_applications);
+$approved_count = 0;
+$total_hours = 0;
+
+foreach ($my_applications as $app) {
+    if (($app['status'] ?? '') === 'approved') {
+        $approved_count++;
+        $job_info = db_get_job_by_id($app['job_id']);
+        $total_hours += (int)($job_info['hours'] ?? 3);
+    }
+}
+
 // กำหนด Badge ตามเพศ
 $gender_badge = 'bg-secondary';
 $gender_icon = 'fa-user';
@@ -154,29 +168,108 @@ if ($user['gender'] === 'ชาย') {
             <!-- รายละเอียดข้อมูลส่วนตัวที่บันทึกไว้ -->
             <div class="p-4 p-md-5">
               
-              <!-- Quick Stats สถิติการมีส่วนร่วมจำลอง -->
+              <!-- Quick Stats สถิติการมีส่วนร่วมจริงจากระบบ -->
               <div class="row g-3 mb-5">
                 <div class="col-md-4">
                   <div class="p-3 rounded-4 border text-center" style="background: var(--bg-subtle); border-color: var(--border-color) !important;">
                     <div class="text-success fs-3 mb-1"><i class="fa-solid fa-award"></i></div>
-                    <div class="fw-bold fs-4 text-main">0 ชั่วโมง</div>
-                    <div class="text-muted small">ชั่วโมงจิตอาสาสะสม</div>
+                    <div class="fw-bold fs-4 text-main"><?php echo $total_hours; ?> ชั่วโมง</div>
+                    <div class="text-muted small">ชั่วโมงจิตอาสาที่ได้รับการรับรอง</div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="p-3 rounded-4 border text-center" style="background: var(--bg-subtle); border-color: var(--border-color) !important;">
                     <div class="text-info fs-3 mb-1"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                    <div class="fw-bold fs-4 text-main">0 กิจกรรม</div>
-                    <div class="text-muted small">โครงการที่เข้าร่วมแล้ว</div>
+                    <div class="fw-bold fs-4 text-main"><?php echo $approved_count; ?> โครงการ</div>
+                    <div class="text-muted small">ผ่านการตอบรับแล้ว (จากสมัคร <?php echo $total_applied; ?> งาน)</div>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="p-3 rounded-4 border text-center" style="background: var(--bg-subtle); border-color: var(--border-color) !important;">
                     <div class="text-warning fs-3 mb-1"><i class="fa-solid fa-certificate"></i></div>
-                    <div class="fw-bold fs-4 text-main">0 ฉบับ</div>
-                    <div class="text-muted small">เกียรติบัตรที่ได้รับ</div>
+                    <div class="fw-bold fs-4 text-main"><?php echo $approved_count; ?> ฉบับ</div>
+                    <div class="text-muted small">สิทธิ์รับเกียรติบัตรสะสม</div>
                   </div>
                 </div>
+              </div>
+
+              <!-- ประวัติการสมัครกิจกรรมจิตอาสาและสถานะการตอบรับ (การตอบโต้กับแอดมิน) -->
+              <div class="mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                  <h4 class="fw-bold fs-5 mb-0 text-main">
+                    <i class="fa-solid fa-clipboard-check text-primary me-2"></i> สถานะการสมัครกิจกรรมจิตอาสาของฉัน (Table 3: application)
+                  </h4>
+                  <span class="badge bg-light text-dark border rounded-pill px-3 py-2 small">
+                    สมัครทั้งหมด <?php echo $total_applied; ?> รายการ
+                  </span>
+                </div>
+
+                <?php if (empty($my_applications)): ?>
+                  <div class="p-4 rounded-4 text-center border" style="background: var(--bg-subtle); border-color: var(--border-color) !important;">
+                    <div class="text-muted fs-2 mb-2"><i class="fa-solid fa-folder-open"></i></div>
+                    <h6 class="fw-bold mb-1">ยังไม่มีประวัติการสมัครกิจกรรมจิตอาสา</h6>
+                    <p class="text-muted small mb-3">คุณยังไม่ได้สมัครเข้าร่วมโครงการใด สามารถเลือกดูโครงการที่เปิดรับสมัครได้ทันที</p>
+                    <a href="activities.html" class="btn-primary-gradient px-4 py-2 fs-6">
+                      <i class="fa-solid fa-compass me-1"></i> เลือกดูกิจกรรมจิตอาสาตอนนี้
+                    </a>
+                  </div>
+                <?php else: ?>
+                  <div class="table-responsive rounded-4 border" style="background: var(--bg-surface); border-color: var(--border-color) !important;">
+                    <table class="table align-middle mb-0">
+                      <thead style="background: var(--bg-subtle);">
+                        <tr>
+                          <th style="width: 50px;" class="text-center">ลำดับ</th>
+                          <th>โครงการจิตอาสา</th>
+                          <th>วันที่สมัคร</th>
+                          <th class="text-center">สถานะการตอบรับ</th>
+                          <th>ข้อความจากแอดมิน</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php $n = 1; foreach ($my_applications as $app): ?>
+                          <?php
+                            $st = $app['status'] ?? 'pending';
+                            $st_badge = 'bg-warning text-dark';
+                            $st_icon = 'fa-clock';
+                            $st_text = 'รอการตอบรับ';
+                            if ($st === 'approved') {
+                              $st_badge = 'bg-success text-white';
+                              $st_icon = 'fa-check-circle';
+                              $st_text = 'ตอบรับแล้ว (อนุมัติ)';
+                            } elseif ($st === 'rejected') {
+                              $st_badge = 'bg-danger text-white';
+                              $st_icon = 'fa-circle-xmark';
+                              $st_text = 'ปฏิเสธการสมัคร';
+                            }
+                          ?>
+                          <tr>
+                            <td class="text-center text-muted fw-bold"><?php echo $n++; ?></td>
+                            <td>
+                              <div class="fw-bold text-main"><?php echo htmlspecialchars($app['job_title']); ?></div>
+                              <div class="small text-muted">ID กิจกรรม: #<?php echo $app['job_id']; ?></div>
+                            </td>
+                            <td class="small text-muted"><?php echo htmlspecialchars($app['applied_at'] ?? '-'); ?></td>
+                            <td class="text-center">
+                              <span class="badge <?php echo $st_badge; ?> rounded-pill px-3 py-2">
+                                <i class="fa-solid <?php echo $st_icon; ?> me-1"></i> <?php echo $st_text; ?>
+                              </span>
+                            </td>
+                            <td>
+                              <?php if (!empty($app['admin_notes'])): ?>
+                                <div class="p-2 rounded small border" style="background: var(--bg-subtle);">
+                                  <i class="fa-solid fa-comment-dots text-primary me-1"></i>
+                                  <strong>แอดมิน:</strong> <?php echo htmlspecialchars($app['admin_notes']); ?>
+                                </div>
+                              <?php else: ?>
+                                <span class="text-muted small fst-italic">กำลังรอเจ้าหน้าที่ตรวจสอบ</span>
+                              <?php endif; ?>
+                            </td>
+                          </tr>
+                        <?php endforeach; ?>
+                      </tbody>
+                    </table>
+                  </div>
+                <?php endif; ?>
               </div>
 
               <!-- ข้อมูลบัญชีและข้อมูลส่วนตัว -->

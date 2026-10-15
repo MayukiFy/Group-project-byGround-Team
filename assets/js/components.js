@@ -150,7 +150,7 @@
                   <span class="brand-text-highlight">Ground</span>Team
                 </div>
               </a>
-              <p class="footer-desc">ชยันต์ บูชาพันธ์ 67011213014 <br>นัฐภูมิ ธงศรี 67011213047 <br>อลิน ฉ่ำมณี 67011213149 <br>สวิตต์ วงศสิงห์   67011213146</p>             
+              <p class="footer-desc">ชยันต์ บูชาพันธ์ 67011213014 <br>นัฐภูมิ ธงศรี 67011213047 <br>อลิน ฉ่ำมณี 67011213149 <br>สวิตต์ วงศสิงห์ 67011213146</p>             
               <div class="social-links mt-3">
                 <a href="https://www.facebook.com/profile.php?id=61595107302167" target="_blank" class="social-icon-btn" aria-label="Facebook">
                   <i class="fa-brands fa-facebook-f"></i>
@@ -259,7 +259,7 @@
               <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-              <form id="volunteerApplyForm">
+              <form id="volunteerApplyForm" method="POST" action="api.php?action=apply_job">
                 <div class="row g-3">
                   <!-- โครงการจิตอาสาที่สมัคร (เปลี่ยนเป็นชื่อโครงการนั้นเลย ล็อกไม่ให้ผู้ใช้เปลี่ยนได้) -->
                   <div class="col-md-12">
@@ -268,7 +268,7 @@
                       <span class="input-group-text border-end-0 bg-transparent text-success" style="border-color: var(--border-color);">
                         <i class="fa-solid fa-hand-holding-heart"></i>
                       </span>
-                      <input type="text" id="modalActivityDisplay" class="form-control-custom border-start-0 fw-bold" readonly style="background-color: var(--bg-subtle); cursor: not-allowed; color: var(--text-main);" placeholder="กำลังเลือกโครงการ..." value="" required>
+                      <input type="text" id="modalActivityDisplay" name="job_title" class="form-control-custom border-start-0 fw-bold" readonly style="background-color: var(--bg-subtle); cursor: not-allowed; color: var(--text-main);" placeholder="กำลังเลือกโครงการ..." value="" required>
                       <input type="hidden" id="modalActivitySelect" name="activity_id" value="">
                     </div>
                     <div class="d-flex align-items-center gap-1 mt-1 text-muted small">
@@ -279,23 +279,23 @@
 
                   <div class="col-md-6">
                     <label class="form-label-custom">ชื่อ - นามสกุล <span class="text-danger">*</span></label>
-                    <input type="text" id="applyFullName" class="form-control-custom" placeholder="เช่น สมชาย ใจดี" required>
+                    <input type="text" id="applyFullName" name="fullname" class="form-control-custom" placeholder="เช่น สมชาย ใจดี" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">หมายเลขโทรศัพท์ <span class="text-danger">*</span></label>
-                    <input type="tel" id="applyPhone" class="form-control-custom" placeholder="เช่น 0812345678" required>
+                    <input type="tel" id="applyPhone" name="phone" class="form-control-custom" placeholder="เช่น 0812345678" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">อีเมล <span class="text-danger">*</span></label>
-                    <input type="email" id="applyEmail" class="form-control-custom" placeholder="example@email.com" required>
+                    <input type="email" id="applyEmail" name="email" class="form-control-custom" placeholder="example@email.com" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">อายุ (ปี) <span class="text-danger">*</span></label>
-                    <input type="number" id="applyAge" class="form-control-custom" min="12" max="80" placeholder="เช่น 22" required>
+                    <input type="number" id="applyAge" name="age" class="form-control-custom" min="12" max="80" placeholder="เช่น 22" required>
                   </div>
                   <div class="col-12">
                     <label class="form-label-custom">ทักษะความสามารถหรือประสบการณ์จิตอาสา (ถ้ามี)</label>
-                    <textarea class="form-control-custom" rows="2" placeholder="เช่น ปฐมพยาบาลเบื้องต้น, ช่างไม้, ถ่ายภาพ, สอนหนังสือ"></textarea>
+                    <textarea name="skills" id="applySkills" class="form-control-custom" rows="2" placeholder="เช่น ปฐมพยาบาลเบื้องต้น, ช่างไม้, ถ่ายภาพ, สอนหนังสือ"></textarea>
                   </div>
                   <div class="col-12">
                     <div class="form-check mt-1">

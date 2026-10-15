@@ -62,19 +62,6 @@
         "age": 22,
         "gender": "ชาย",
         "role": "user",
-        "created_at": "2026-10-13 16:16:58"
-    },
-    {
-        "id": 6,
-        "username": "Nt561728",
-        "password": "0628313165_Aqws",
-        "fullname": "Mayuki",
-        "phone": "0627741790",
-        "email": "whan0614844@gmail.com",
-        "province": "กรุงเทพมหานคร",
-        "age": 25,
-        "gender": "หญิง",
-        "role": "user",
-        "created_at": "2026-10-14 16:15:20"
+        "created_at": "2026-10-15 15:52:29"
     }
 ]

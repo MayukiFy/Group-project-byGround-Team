@@ -1,0 +1,79 @@
+[
+    {
+        "id": 8,
+        "name": "นัฐภูมิ ธงศรี",
+        "email": "67011213047@msu.ac.th",
+        "phone": "0628313176",
+        "subject": "สอบถามรายละเอียดกิจกรรมจิตอาสา",
+        "message": "ฟดเัหะ้เหพะเ้หกพเ้กพะเ้กพะ้กดพะ้",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:39:46"
+    },
+    {
+        "id": 7,
+        "name": "นายสมศักดิ์ รักดี",
+        "email": "somsak@example.com",
+        "phone": "089-999-8888",
+        "subject": "สอบถามการเข้าร่วมกิจกรรม",
+        "message": "สนใจเข้าร่วมกิจกรรมปลูกป่าชายเลน อยากทราบว่ามีรถรับส่งไหมครับ",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:35:38"
+    },
+    {
+        "id": 6,
+        "name": "นัฐภูมิ ธงศรี",
+        "email": "67011213047@msu.ac.th",
+        "phone": "0627741790",
+        "subject": "สอบถามรายละเอียดกิจกรรมจิตอาสา",
+        "message": "wdasdfsdfasdf",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:26:05"
+    },
+    {
+        "id": 5,
+        "name": "นัฐภูมิ ธงศรี",
+        "email": "67011213047@msu.ac.th",
+        "phone": "0627741790",
+        "subject": "สอบถามรายละเอียดกิจกรรมจิตอาสา",
+        "message": "wdasdfsdfasdf",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:26:04"
+    },
+    {
+        "id": 4,
+        "name": "นัฐภูมิ ธงศรี",
+        "email": "67011213047@msu.ac.th",
+        "phone": "0627741790",
+        "subject": "สอบถามรายละเอียดกิจกรรมจิตอาสา",
+        "message": "wdasdfsdfasdf",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:25:57"
+    },
+    {
+        "id": 3,
+        "name": "Somchai Test",
+        "email": "somchai@test.com",
+        "phone": "0811111111",
+        "subject": "สอบถาม",
+        "message": "ทดสอบส่งข้อความ",
+        "status": "unread",
+        "reply_message": null,
+        "created_at": "2026-10-15 16:16:38"
+    },
+    {
+        "id": 1,
+        "name": "กนกวรรณ รัตนโชติ",
+        "email": "kanokwan@example.com",
+        "phone": "0823456789",
+        "subject": "สอบถามรายละเอียดกิจกรรมจิตอาสา",
+        "message": "อยากสอบถามว่ากิจกรรมปลูกป่าที่ จ.ร้อยเอ็ด มีรถตู้รับส่งจากตัวเมืองไหมคะ?",
+        "status": "read",
+        "reply_message": "ประสานงานแจ้งจุดขึ้นรถตู้เรียบร้อยแล้ว",
+        "created_at": "2026-10-14 11:20:00"
+    }
+]

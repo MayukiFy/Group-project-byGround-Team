@@ -14,98 +14,31 @@ require_once __DIR__ . '/db.php';
 $dataFile = __DIR__ . '/data/users.json';
 
 // --------------------------------------------------------------------------
-// 1. ฟังก์ชันอ่านข้อมูลผู้ใช้งานทั้งหมดจากฐานข้อมูล MySQL (tbground)
+// 1. ฟังก์ชันอ่านข้อมูลผู้ใช้งานทั้งหมดจากฐานข้อมูล MySQL (ตาราง user)
 // --------------------------------------------------------------------------
 function get_all_users() {
-    global $pdo, $dataFile;
-
-    // ลองดึงจาก MySQL Database 'groundteam', Table 'tbground'
-    if ($pdo) {
-        try {
-            $stmt = $pdo->query("SELECT * FROM tbground ORDER BY id ASC");
-            $users = $stmt->fetchAll();
-            if ($users && count($users) > 0) {
-                return $users;
-            }
-        } catch (Exception $e) {
-            // เกิดข้อผิดพลาดใน MySQL จะดึงจากไฟล์สำรองแทน
-        }
-    }
-
-    // แหล่งข้อมูลสำรอง: data/users.json
-    if (!file_exists($dataFile)) {
-        return [];
-    }
-    $json = file_get_contents($dataFile);
-    $users = json_decode($json, true);
-    return is_array($users) ? $users : [];
+    return db_get_all_users();
 }
 
 // --------------------------------------------------------------------------
 // 2. ฟังก์ชันสำรองข้อมูลลงไฟล์ JSON
 // --------------------------------------------------------------------------
 function save_all_users($users) {
-    global $dataFile;
-    $dir = dirname($dataFile);
-    if (!is_dir($dir)) {
-        mkdir($dir, 0777, true);
-    }
-    file_put_contents($dataFile, json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    _write_json_file('users.json', $users);
 }
 
 // --------------------------------------------------------------------------
-// 3. ฟังก์ชันเพิ่มข้อมูลสมาชิกใหม่ลงตาราง tbground
+// 3. ฟังก์ชันเพิ่มข้อมูลสมาชิกใหม่ลงตาราง user
 // --------------------------------------------------------------------------
 function insert_new_user($userData) {
-    global $pdo;
-
-    $inserted_id = null;
-    if ($pdo) {
-        try {
-            $sql = "INSERT INTO tbground (`username`, `password`, `fullname`, `phone`, `email`, `province`, `age`, `gender`, `role`, `created_at`) 
-                    VALUES (:username, :password, :fullname, :phone, :email, :province, :age, :gender, :role, :created_at)";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                ':username'   => $userData['username'],
-                ':password'   => $userData['password'],
-                ':fullname'   => $userData['fullname'],
-                ':phone'      => $userData['phone'],
-                ':email'      => $userData['email'],
-                ':province'   => $userData['province'],
-                ':age'        => $userData['age'],
-                ':gender'     => $userData['gender'],
-                ':role'       => $userData['role'] ?? 'user',
-                ':created_at' => $userData['registered_at'] ?? date('Y-m-d H:i:s')
-            ]);
-            $inserted_id = (int)$pdo->lastInsertId();
-            $userData['id'] = $inserted_id;
-        } catch (Exception $e) {
-            // หาก MySQL ไม่พร้อม ใช้วิธีคำนวณ ID สำรอง
-        }
-    }
-
-    // อัปเดตสำรองลง data/users.json
-    $allUsers = get_all_users();
-    save_all_users($allUsers);
-
-    return $userData;
+    return db_create_user($userData);
 }
 
 // --------------------------------------------------------------------------
-// 4. ฟังก์ชันลบสมาชิกจากตาราง tbground
+// 4. ฟังก์ชันลบสมาชิกจากตาราง user
 // --------------------------------------------------------------------------
 function delete_user_by_id($id) {
-    global $pdo;
-    if ($pdo) {
-        try {
-            $stmt = $pdo->prepare("DELETE FROM tbground WHERE id = :id AND username != 'admin'");
-            $stmt->execute([':id' => $id]);
-        } catch (Exception $e) {}
-    }
-
-    // อัปเดตสำรองในไฟล์ JSON
-    $allUsers = get_all_users();
-    save_all_users($allUsers);
+    return db_delete_user($id);
 }
 
 // --------------------------------------------------------------------------
@@ -197,7 +130,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $matched_user = null;
         if ($pdo) {
             try {
-                $stmt = $pdo->prepare("SELECT * FROM tbground WHERE username = :username AND password = :password LIMIT 1");
+                $stmt = $pdo->prepare("SELECT * FROM `user` WHERE username = :username AND password = :password LIMIT 1");
                 $stmt->execute([':username' => $username, ':password' => $password]);
                 $user_found = $stmt->fetch();
                 if ($user_found) {
@@ -276,7 +209,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             // ตรวจสอบใน MySQL กรณีมีบัญชี role = 'admin' อื่นๆ
             if ($pdo) {
                 try {
-                    $stmt = $pdo->prepare("SELECT * FROM tbground WHERE username = :username AND password = :password AND role = 'admin' LIMIT 1");
+                    $stmt = $pdo->prepare("SELECT * FROM `user` WHERE username = :username AND password = :password AND role = 'admin' LIMIT 1");
                     $stmt->execute([':username' => $username, ':password' => $password]);
                     $row = $stmt->fetch();
                     if ($row) {
@@ -291,7 +224,7 @@ if ($action === 'login' && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 $is_normal_user = false;
                 if ($pdo) {
                     try {
-                        $chk = $pdo->prepare("SELECT * FROM tbground WHERE username = :username AND password = :password LIMIT 1");
+                        $chk = $pdo->prepare("SELECT * FROM `user` WHERE username = :username AND password = :password LIMIT 1");
                         $chk->execute([':username' => $username, ':password' => $password]);
                         if ($chk->fetch()) $is_normal_user = true;
                     } catch (Exception $e) {}
@@ -376,10 +309,10 @@ if ($action === 'register' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // ตรวจสอบ username ซ้ำในฐานข้อมูล tbground
+    // ตรวจสอบ username ซ้ำในฐานข้อมูล user
     if ($pdo) {
         try {
-            $chk = $pdo->prepare("SELECT id FROM tbground WHERE username = :username LIMIT 1");
+            $chk = $pdo->prepare("SELECT id FROM `user` WHERE username = :username LIMIT 1");
             $chk->execute([':username' => $username]);
             if ($chk->fetch()) {
                 $error_msg = 'ชื่อผู้ใช้ "' . htmlspecialchars($username) . '" มีผู้ใช้งานแล้ว กรุณาเลือกชื่ออื่น';

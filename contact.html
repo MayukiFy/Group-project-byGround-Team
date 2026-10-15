@@ -120,34 +120,37 @@
               <h2 class="fw-bold fs-3 mb-2">ส่งข้อความถึงเรา</h2>
               <p class="text-muted small mb-4">กรอกข้อมูลลงในแบบฟอร์มด้านล่าง ทีมงานจะตอบกลับทางอีเมลหรือโทรศัพท์โดยเร็วที่สุด</p>
 
-              <form id="contactForm">
+              <!-- Alert แสดงผลตอบกลับ -->
+              <div id="contactAlertArea"></div>
+
+              <form id="contactForm" method="POST" action="api.php?action=send_contact">
                 <div class="row g-3">
                   <div class="col-md-6">
                     <label class="form-label-custom">ชื่อ - นามสกุล <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control-custom" placeholder="เช่น รัชชานนท์ วงศ์ดี" required>
+                    <input type="text" name="name" class="form-control-custom" placeholder="เช่น รัชชานนท์ วงศ์ดี" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">อีเมลของคุณ <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control-custom" placeholder="name@email.com" required>
+                    <input type="email" name="email" class="form-control-custom" placeholder="name@email.com" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">เบอร์โทรศัพท์ <span class="text-danger">*</span></label>
-                    <input type="tel" class="form-control-custom" placeholder="08XXXXXXXX" required>
+                    <input type="tel" name="phone" class="form-control-custom" placeholder="08XXXXXXXX" required>
                   </div>
                   <div class="col-md-6">
                     <label class="form-label-custom">หัวข้อที่ต้องการติดต่อ <span class="text-danger">*</span></label>
-                    <select class="form-select-custom" required>
+                    <select name="subject" class="form-select-custom" required>
                       <option value="" selected disabled>-- เลือกหัวข้อ --</option>
-                      <option value="activity">สอบถามรายละเอียดกิจกรรมจิตอาสา</option>
-                      <option value="partner">เสนอโครงการ / ชวนเป็นเครือข่ายพันธมิตร</option>
-                      <option value="sponsor">สนับสนุนของรางวัล / ทุนสนับสนุน</option>
-                      <option value="cert">สอบถามเรื่องเกียรติบัตรและชั่วโมงจิตอาสา</option>
-                      <option value="other">เรื่องอื่นๆ</option>
+                      <option value="สอบถามรายละเอียดกิจกรรมจิตอาสา">สอบถามรายละเอียดกิจกรรมจิตอาสา</option>
+                      <option value="เสนอโครงการ / ชวนเป็นเครือข่ายพันธมิตร">เสนอโครงการ / ชวนเป็นเครือข่ายพันธมิตร</option>
+                      <option value="สนับสนุนของรางวัล / ทุนสนับสนุน">สนับสนุนของรางวัล / ทุนสนับสนุน</option>
+                      <option value="สอบถามเรื่องเกียรติบัตรและชั่วโมงจิตอาสา">สอบถามเรื่องเกียรติบัตรและชั่วโมงจิตอาสา</option>
+                      <option value="เรื่องอื่นๆ">เรื่องอื่นๆ</option>
                     </select>
                   </div>
                   <div class="col-12">
                     <label class="form-label-custom">ข้อความของคุณ <span class="text-danger">*</span></label>
-                    <textarea class="form-control-custom" rows="5" placeholder="ระบุข้อความ รายละเอียด หรือคำถามที่คุณต้องการสอบถาม..." required></textarea>
+                    <textarea name="message" class="form-control-custom" rows="5" placeholder="ระบุข้อความ รายละเอียด หรือคำถามที่คุณต้องการสอบถาม..." required></textarea>
                   </div>
                   <div class="col-12">
                     <div class="form-check mt-1">

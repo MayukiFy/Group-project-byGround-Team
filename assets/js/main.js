@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 5. Activity Search, Category Filter & Pagination Controller (หน้ารวมงานกิจกรรม)
   const activityGrid = document.getElementById('activityGrid');
-  const activityItems = Array.from(document.querySelectorAll('.activity-item'));
+  let activityItems = Array.from(document.querySelectorAll('.activity-item'));
   const filterBtns = document.querySelectorAll('.btn-filter');
   const searchInput = document.getElementById('activitySearchInput');
   const searchBtn = document.getElementById('activitySearchBtn');
@@ -373,6 +373,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // เริ่มต้นแสดงผลครั้งแรก
     updateActivityView(false);
+
+    // ซิงค์ข้อมูลกิจกรรมล่าสุดจาก Table 2: job (รองรับกรณีแอดมินเพิ่มหรือแก้ไขข้อมูล)
+    function renderDynamicPill(cat) {
+      cat = (cat || '').trim().toLowerCase();
+      if (cat === 'recruiting') return '<span class="category-pill pill-recruiting"><i class="fa-solid fa-users"></i> ยังรับสมัครอยู่</span>';
+      if (cat === 'edu') return '<span class="category-pill pill-edu"><i class="fa-solid fa-graduation-cap"></i> การศึกษา</span>';
+      if (cat === 'nature') return '<span class="category-pill pill-nature"><i class="fa-solid fa-tree"></i> ธรรมชาติ</span>';
+      if (cat === 'food') return '<span class="category-pill pill-food"><i class="fa-solid fa-utensils"></i> อาหาร</span>';
+      if (cat === 'donate') return '<span class="category-pill pill-donate"><i class="fa-solid fa-donate"></i> บริจาค</span>';
+      if (cat === 'artificial') return '<span class="category-pill pill-artificial"><i class="fa-solid fa-hands-holding-child"></i> ประดิษฐ์</span>';
+      return `<span class="category-pill pill-edu">${cat}</span>`;
+    }
+
+    function syncJobsFromBackend() {
+      if (!activityGrid) return;
+      fetch('api.php?action=get_jobs')
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+            const noActivityFoundEl = document.getElementById('noActivityFound');
+            const noActHTML = noActivityFoundEl ? noActivityFoundEl.outerHTML : '';
+            
+            let cardsHTML = '';
+            data.data.forEach(job => {
+              const categories = (job.category || 'recruiting').split(',').map(renderDynamicPill).join(' ');
+              const percent = Math.min(100, Math.round(((job.current_quota || 0) / (job.max_quota || 30)) * 100));
+              cardsHTML += `
+                <div class="col-lg-4 col-md-6 activity-item" data-category="${job.category}">
+                  <div class="activity-card">
+                    <div class="activity-card-img-wrap">
+                      <img src="${job.image_url || 'assets/images/กระดาษทำมือ.jpeg'}" class="activity-card-img" alt="${job.title}" loading="lazy" onerror="this.src='assets/images/กระดาษทำมือ.jpeg'">
+                      <div class="category-tags-wrap">
+                        ${categories}
+                      </div>
+                      <span class="date-badge"><i class="fa-regular fa-calendar"></i> ${job.event_date}</span>
+                    </div>
+                    <div class="activity-body">
+                      <h3 class="activity-title">${job.title}</h3>
+                      <p class="activity-desc">${job.description}</p>
+                      <div class="activity-date-info">
+                        <i class="fa-regular fa-clock"></i> ${job.event_date} ${job.event_time ? 'ตั้งแต่เวลา ' + job.event_time : ''}
+                      </div>
+                      <div class="activity-meta">
+                        <div class="activity-meta-item"><i class="fa-solid fa-location-dot text-danger"></i> ${job.location}</div>
+                        <div class="activity-meta-item"><i class="fa-solid fa-award text-warning"></i> ${job.hours} ชั่วโมง</div>
+                      </div>
+                      <div class="activity-progress-wrap">
+                        <div class="progress-custom">
+                          <div class="progress-bar-nature" style="width: ${percent}%; height: 100%;"></div>
+                        </div>
+                        <div class="quota-text">
+                          <span>รับจำนวน ${job.max_quota} คน</span>
+                          <strong class="text-success">สมัครแล้ว ${job.current_quota} คน</strong>
+                        </div>
+                      </div>
+                      <button class="btn-primary-gradient w-100 justify-content-center btn-quick-apply" data-activity-id="${job.id}" data-bs-toggle="modal" data-bs-target="#volunteerModal">
+                        <i class="fa-solid fa-hand-holding-heart"></i> ${job.status === 'closed' ? 'ปิดรับสมัครแล้ว' : 'สมัครร่วมโครงการนี้'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            });
+
+            activityGrid.innerHTML = cardsHTML + noActHTML;
+            activityItems = Array.from(document.querySelectorAll('.activity-item'));
+            updateActivityView(false);
+          }
+        })
+        .catch(() => {});
+    }
+
+    syncJobsFromBackend();
   }
 
   // 6. Hook Quick Apply Buttons on cards to lock activity in Modal
@@ -396,28 +469,92 @@ document.addEventListener('DOMContentLoaded', () => {
       if (selectElem && actId) {
         selectElem.value = actId;
       }
+
+      // บังคับเปิด Modal ให้ทำงาน 100% ทุกกรณี
+      const modalEl = document.getElementById('volunteerModal');
+      if (modalEl && typeof bootstrap !== 'undefined') {
+        const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+        modalInstance.show();
+      }
     }
   });
 
-  // 7. Volunteer Application Form Submission
+  // 7. Volunteer Application Form Submission (ส่งข้อมูลไปยัง Table 3: application)
   document.addEventListener('submit', (e) => {
     if (e.target && e.target.id === 'volunteerApplyForm') {
       e.preventDefault();
-      const modalEl = document.getElementById('volunteerModal');
-      const modalInstance = bootstrap.Modal.getInstance(modalEl);
-      if (modalInstance) {
-        modalInstance.hide();
+      const form = e.target;
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> กำลังส่งใบสมัคร...';
       }
 
-      showNotification('🎉 การสมัครเสร็จสมบูรณ์!', 'เจ้าหน้าที่ Ground Team ได้รับข้อมูลของคุณแล้ว และจะติดต่อกลับเพื่อแจ้งรายละเอียดการเข้าร่วมกิจกรรมทางอีเมล/เบอร์โทรศัพท์ ขอขอบคุณที่ร่วมเป็นพลังแห่งการเปลี่ยนแปลง');
-      e.target.reset();
+      fetch('api.php?action=apply_job', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        const modalEl = document.getElementById('volunteerModal');
+        if (modalEl) {
+          const modalInstance = bootstrap.Modal.getInstance(modalEl);
+          if (modalInstance) modalInstance.hide();
+        }
+        if (data.success) {
+          showNotification('🎉 การสมัครเสร็จสมบูรณ์!', data.message || 'ข้อมูลการสมัครของคุณถูกบันทึกแล้ว แอดมินจะตรวจสอบและตอบรับการสมัคร คุณสามารถติดตามสถานะได้ที่หน้าโปรไฟล์');
+          form.reset();
+        } else {
+          showNotification('⚠️ เกิดข้อผิดพลาด', data.message || 'ไม่สามารถสมัครได้ กรุณาลองใหม่อีกครั้ง');
+        }
+      })
+      .catch(err => {
+        showNotification('⚠️ ข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่อีกครั้ง');
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
     }
 
-    // Contact Form Submission
+    // Contact Form Submission (ส่งข้อมูลไปยัง Table 4: contact)
     if (e.target && e.target.id === 'contactForm') {
       e.preventDefault();
-      showNotification('✉️ ส่งข้อความเรียบร้อยแล้ว!', 'ขอบคุณที่ติดต่อ Ground Team ทางทีมงานจะตอบกลับข้อความของคุณภายใน 24 ชั่วโมง');
-      e.target.reset();
+      const form = e.target;
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i> กำลังส่งข้อความ...';
+      }
+
+      fetch('api.php?action=send_contact', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          showNotification('✉️ ส่งข้อความเรียบร้อยแล้ว!', data.message || 'ขอบคุณที่ติดต่อ Ground Team ทีมงานจะติดต่อกลับโดยเร็วที่สุด');
+          form.reset();
+        } else {
+          showNotification('⚠️ เกิดข้อผิดพลาด', data.message || 'ไม่สามารถส่งข้อความได้');
+        }
+      })
+      .catch(err => {
+        showNotification('⚠️ ข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้');
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+      });
     }
   });
 
